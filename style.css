@@ -4,9 +4,10 @@
   --accent-color: #FF6B6B;
   --background-color: #F5F5F5;
   --text-color: #333333;
-  --spacing-unit: 1rem;
+  --spacing-unit: clamp(1rem, 2vw, 1.5rem);
   --border-radius: 8px;
   --transition-speed: 0.3s;
+  --container-width: min(1200px, 95vw);
 }
 
 * {
@@ -15,11 +16,17 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: 'Space Grotesk', sans-serif;
   line-height: 1.6;
   color: var(--text-color);
   background-color: var(--background-color);
+  overflow-x: hidden;
+  font-size: clamp(16px, 1vw, 18px);
 }
 
 .navbar {
@@ -29,13 +36,14 @@ body {
   right: 0;
   background-color: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   z-index: 1000;
   padding: 1rem 0;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .nav-content {
-  max-width: 1200px;
+  max-width: var(--container-width);
   margin: 0 auto;
   padding: 0 var(--spacing-unit);
   display: flex;
@@ -44,19 +52,24 @@ body {
 }
 
 .logo {
-  font-size: 1.5rem;
+  font-size: clamp(1.2rem, 2vw, 1.5rem);
   font-weight: 700;
   color: var(--primary-color);
   text-decoration: none;
   letter-spacing: -1px;
 }
 
+.nav-links {
+  display: flex;
+  gap: clamp(1rem, 2vw, 2rem);
+}
+
 .nav-links a {
   color: var(--secondary-color);
   text-decoration: none;
-  margin-left: 2rem;
   font-weight: 500;
   transition: color var(--transition-speed);
+  font-size: clamp(0.9rem, 1.5vw, 1rem);
 }
 
 .nav-links a:hover {
@@ -64,45 +77,47 @@ body {
 }
 
 main {
-  max-width: 1200px;
+  max-width: var(--container-width);
   margin: 0 auto;
   padding: 6rem var(--spacing-unit) 2rem;
 }
 
 .hero {
-  min-height: 80vh;
+  min-height: 90vh;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 4rem 0;
+  padding: clamp(2rem, 5vw, 4rem) 0;
 }
 
 .hero-content h1 {
-  font-size: 4rem;
+  font-size: clamp(2.5rem, 5vw, 4rem);
   font-weight: 700;
   margin-bottom: 1rem;
   letter-spacing: -2px;
+  line-height: 1.2;
 }
 
 .subtitle {
-  font-size: 1.5rem;
+  font-size: clamp(1.2rem, 2vw, 1.5rem);
   color: var(--secondary-color);
   margin-bottom: 2rem;
 }
 
 .hero-description {
-  max-width: 600px;
+  max-width: min(600px, 90%);
   margin: 0 auto;
-  font-size: 1.2rem;
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
 }
 
 section {
-  margin: 6rem 0;
+  margin: clamp(3rem, 8vw, 6rem) 0;
+  padding: 0 var(--spacing-unit);
 }
 
 h2 {
-  font-size: 2.5rem;
+  font-size: clamp(2rem, 3vw, 2.5rem);
   margin-bottom: 2rem;
   position: relative;
   display: inline-block;
@@ -119,23 +134,27 @@ h2::after {
 }
 
 .about-content {
-  max-width: 800px;
-  font-size: 1.2rem;
+  max-width: min(800px, 90%);
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
+  margin: 0 auto;
 }
 
 .project-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
+  gap: clamp(1.5rem, 3vw, 2rem);
   margin-top: 3rem;
 }
 
 .project-card {
   background: white;
-  padding: 2rem;
+  padding: clamp(1.5rem, 3vw, 2rem);
   border-radius: var(--border-radius);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   transition: transform var(--transition-speed);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .project-card:hover {
@@ -143,13 +162,13 @@ h2::after {
 }
 
 .project-card h3 {
-  font-size: 1.5rem;
+  font-size: clamp(1.2rem, 2vw, 1.5rem);
   margin-bottom: 1rem;
   color: var(--primary-color);
 }
 
 .contact {
-  max-width: 600px;
+  max-width: min(600px, 90%);
   margin: 6rem auto;
 }
 
@@ -159,11 +178,11 @@ h2::after {
 
 input, textarea {
   width: 100%;
-  padding: 1rem;
+  padding: clamp(0.8rem, 1.5vw, 1rem);
   border: 2px solid #E0E0E0;
   border-radius: var(--border-radius);
   font-family: inherit;
-  font-size: 1rem;
+  font-size: clamp(0.9rem, 1.2vw, 1rem);
   transition: border-color var(--transition-speed);
 }
 
@@ -181,12 +200,14 @@ button {
   background-color: var(--accent-color);
   color: white;
   border: none;
-  padding: 1rem 2rem;
-  font-size: 1rem;
+  padding: clamp(0.8rem, 1.5vw, 1rem) clamp(1.5rem, 3vw, 2rem);
+  font-size: clamp(0.9rem, 1.2vw, 1rem);
   font-weight: 600;
   border-radius: var(--border-radius);
   cursor: pointer;
   transition: background-color var(--transition-speed);
+  width: 100%;
+  max-width: 300px;
 }
 
 button:hover {
@@ -195,26 +216,99 @@ button:hover {
 
 footer {
   text-align: center;
-  padding: 2rem;
+  padding: clamp(1.5rem, 3vw, 2rem);
   color: var(--secondary-color);
   border-top: 1px solid #E0E0E0;
+  margin-top: 4rem;
+}
+
+/* Mobile Navigation */
+.mobile-menu-button {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--primary-color);
 }
 
 @media (max-width: 768px) {
-  .hero-content h1 {
-    font-size: 3rem;
+  .mobile-menu-button {
+    display: block;
   }
-  
-  .subtitle {
-    font-size: 1.2rem;
+
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    padding: 1rem;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   }
-  
+
+  .nav-links.active {
+    display: flex;
+  }
+
+  .nav-links a {
+    margin: 0.5rem 0;
+  }
+
+  .hero {
+    min-height: 70vh;
+  }
+
+  .project-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Print styles */
+@media print {
+  .navbar {
+    position: static;
+    background: none;
+    box-shadow: none;
+  }
+
   .nav-links {
     display: none;
   }
-  
-  .project-grid {
-    grid-template-columns: 1fr;
+
+  main {
+    padding: 0;
+  }
+
+  .hero {
+    min-height: auto;
+    padding: 2rem 0;
+  }
+
+  button {
+    display: none;
+  }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  :root {
+    --primary-color: #000000;
+    --secondary-color: #333333;
+    --accent-color: #FF0000;
+    --background-color: #FFFFFF;
+    --text-color: #000000;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
   }
 }
   

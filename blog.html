@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Mattie Ball's Engineering Learning Log - Documenting the journey of learning, breaking, and fixing in engineering." />
+  <title>Learning Log - Mattie Ball</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="blog.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="blog-body">
+  <nav class="navbar">
+    <div class="nav-content">
+      <a href="index.html" class="logo">MB</a>
+      <button class="mobile-menu-button" aria-label="Toggle menu">☰</button>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="blog.html" class="active">Learning Log</a>
+        <a href="index.html#about">About</a>
+        <a href="index.html#contact">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="blog-container">
+    <!-- Sidebar Navigation -->
+    <aside class="blog-sidebar">
+      <div class="sidebar-content">
+        <h2>Learning Log</h2>
+        <p class="sidebar-description">Documenting my engineering journey</p>
+        
+        <div class="category-section">
+          <h3>Categories</h3>
+          <ul class="category-list">
+            <li><a href="#mechanical" class="active">Mechanical</a></li>
+            <li><a href="#electrical">Electrical</a></li>
+            <li><a href="#software">Software</a></li>
+            <li><a href="#projects">Projects</a></li>
+          </ul>
+        </div>
+
+        <div class="recent-posts">
+          <h3>Recent Posts</h3>
+          <ul class="post-list">
+            <li>
+              <a href="#post1">
+                <span class="post-date">2024-03-20</span>
+                <span class="post-title">Understanding Thermal Dynamics</span>
+              </a>
+            </li>
+            <li>
+              <a href="#post2">
+                <span class="post-date">2024-03-18</span>
+                <span class="post-title">CAD Modeling Best Practices</span>
+              </a>
+            </li>
+            <li>
+              <a href="#post3">
+                <span class="post-date">2024-03-15</span>
+                <span class="post-title">Circuit Design Fundamentals</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="blog-main">
+      <article class="blog-post">
+        <header class="post-header">
+          <div class="post-meta">
+            <span class="post-date">March 20, 2024</span>
+            <span class="post-category">Mechanical</span>
+          </div>
+          <h1>Understanding Thermal Dynamics in Engineering Design</h1>
+          <p class="post-excerpt">Exploring the fundamental principles of thermal dynamics and their application in modern engineering design.</p>
+        </header>
+
+        <div class="post-content">
+          <h2>The Challenge</h2>
+          <p>When designing mechanical systems, understanding thermal dynamics is crucial. I recently encountered an interesting challenge while working on a heat transfer project...</p>
+
+          <h2>What I Learned</h2>
+          <p>The key principles of thermal dynamics that proved essential:</p>
+          <ul>
+            <li>Heat transfer mechanisms: conduction, convection, and radiation</li>
+            <li>Thermal conductivity of different materials</li>
+            <li>Temperature gradient effects on material properties</li>
+          </ul>
+
+          <h2>The Solution</h2>
+          <p>After several iterations and experiments, I developed a solution that effectively managed the thermal requirements...</p>
+
+          <div class="post-tags">
+            <span class="tag">Thermal Dynamics</span>
+            <span class="tag">Heat Transfer</span>
+            <span class="tag">Engineering Design</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Template for new posts -->
+      <div class="post-template" style="display: none;">
+        <article class="blog-post">
+          <header class="post-header">
+            <div class="post-meta">
+              <span class="post-date">YYYY-MM-DD</span>
+              <span class="post-category">Category</span>
+            </div>
+            <h1>Post Title</h1>
+            <p class="post-excerpt">Brief description of the post.</p>
+          </header>
+
+          <div class="post-content">
+            <h2>Section Title</h2>
+            <p>Content goes here...</p>
+
+            <div class="post-tags">
+              <span class="tag">Tag 1</span>
+              <span class="tag">Tag 2</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+  <script src="blog.js"></script>
+</body>
+</html> 

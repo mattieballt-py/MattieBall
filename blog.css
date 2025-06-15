@@ -1,5 +1,5 @@
-/* Antimetal-inspired blog layout */
-.antimetal-blog-container {
+/* Mattie Ball's blog layout */
+.mattie-blog-container {
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -55,7 +55,7 @@
   color: var(--accent-color, #2e6e4c);
 }
 
-.antimetal-main {
+.mattie-blog-main {
   flex: 1 1 700px;
   max-width: 700px;
   background: #fff;
@@ -64,22 +64,22 @@
   padding: 2.5rem 2.5rem 2rem 2.5rem;
 }
 
-.antimetal-header {
+.mattie-blog-header {
   margin-bottom: 2.5rem;
 }
-.antimetal-title {
+.mattie-blog-title {
   font-size: 2.5rem;
   font-weight: 700;
   margin-bottom: 0.7rem;
   color: #222;
   line-height: 1.15;
 }
-.antimetal-subtitle {
+.mattie-blog-subtitle {
   font-size: 1.25rem;
   color: #666;
   margin-bottom: 1.5rem;
 }
-.antimetal-meta-row {
+.mattie-blog-meta-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -129,26 +129,26 @@
   color: #fff;
 }
 
-.antimetal-post section {
+.mattie-blog-post section {
   margin-bottom: 2.5rem;
 }
-.antimetal-post h2 {
+.mattie-blog-post h2 {
   font-size: 1.4rem;
   color: #222;
   margin-bottom: 0.7rem;
   font-weight: 700;
 }
-.antimetal-post ul {
+.mattie-blog-post ul {
   margin-left: 1.2rem;
   margin-bottom: 1.2rem;
 }
-.antimetal-post p, .antimetal-post li {
+.mattie-blog-post p, .mattie-blog-post li {
   color: #444;
   font-size: 1.08rem;
 }
 
 @media (max-width: 1024px) {
-  .antimetal-blog-container {
+  .mattie-blog-container {
     flex-direction: column;
     align-items: stretch;
     gap: 1.5rem;
@@ -158,14 +158,14 @@
     max-width: 100%;
     margin-bottom: 1.5rem;
   }
-  .antimetal-main {
+  .mattie-blog-main {
     max-width: 100%;
     padding: 2rem 1rem 1.5rem 1rem;
   }
 }
 
 @media (max-width: 700px) {
-  .antimetal-blog-container {
+  .mattie-blog-container {
     padding: 1rem 0.2rem 2rem 0.2rem;
   }
   .toc-card {
@@ -173,7 +173,7 @@
     max-width: 100%;
     padding: 1rem;
   }
-  .antimetal-main {
+  .mattie-blog-main {
     padding: 1rem 0.5rem;
   }
 }
@@ -194,7 +194,7 @@
   }
 }
 
-/* Accent color for Antimetal blog */
+/* Accent color for Mattie Ball blog */
 :root {
   --accent-color: #2e6e4c;
 } 

@@ -52,7 +52,7 @@
 }
 .toc-card a:hover, .toc-card a:focus {
   background: #f5f5f5;
-  color: var(--accent-color, #FF6B6B);
+  color: var(--accent-color, #2e6e4c);
 }
 
 .antimetal-main {
@@ -125,7 +125,7 @@
   transition: background 0.2s, color 0.2s;
 }
 .meta-btn:hover, .meta-btn:focus {
-  background: var(--accent-color, #FF6B6B);
+  background: var(--accent-color, #2e6e4c);
   color: #fff;
 }
 
@@ -192,4 +192,9 @@
     box-shadow: none;
     padding: 0;
   }
+}
+
+/* Accent color for Antimetal blog */
+:root {
+  --accent-color: #2e6e4c;
 } 

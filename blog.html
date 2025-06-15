@@ -30,65 +30,185 @@
   </nav>
 
   <div class="antimetal-blog-container">
-    <!-- Sidebar Table of Contents -->
+    <!-- Sidebar Table of Contents with categories and dropdowns -->
     <aside class="toc-sidebar">
       <div class="toc-card">
         <h3>CONTENTS</h3>
-        <ul>
-          <li><a href="#Adventures">Adventures</a></li>
-          <li><a href="#Engineering">Engineering</a></li>
-          <li><a href="#SoftwareDev">Software Dev</a></li>
+        <ul class="toc-categories">
+          <!-- Adventures Category -->
+          <li class="toc-category active" tabindex="0">
+            <span>Adventures</span>
+            <ul class="toc-articles">
+              <!-- Add new articles for Adventures here -->
+              <li><a href="#adventure1" class="active">Swimming</a></li>
+              <li><a href="#adventure2">Climbing</a></li>
+            </ul>
+          </li>
+          <!-- Engineering Category -->
+          <li class="toc-category" tabindex="0">
+            <span>Engineering</span>
+            <ul class="toc-articles">
+              <!-- Add new articles for Engineering here -->
+              <li><a href="#engineering1">Robotics</a></li>
+              <li><a href="#engineering2">Thermal Dynamics</a></li>
+            </ul>
+          </li>
+          <!-- Software Dev Category -->
+          <li class="toc-category" tabindex="0">
+            <span>Software Dev</span>
+            <ul class="toc-articles">
+              <!-- Add new articles for Software Dev here -->
+              <li><a href="#software1">Portfolio Site</a></li>
+              <li><a href="#software2">ML for Engineers</a></li>
+            </ul>
+          </li>
         </ul>
       </div>
     </aside>
 
-    <!-- Main Content -->
+    <!-- Main Content: Only show articles from the selected category -->
     <main class="antimetal-main">
-      <header class="antimetal-header">
-        <h1 class="antimetal-title">Creating a portfolio site</h1>
-        <p class="antimetal-subtitle">When shortcuts become the long cuts. How AI doesn't always help.</p>
-        <div class="antimetal-meta-row">
-          <div class="author-info">
-            <img src="https://ui-avatars.com/api/?name=Mattie+Ball&background=eee&color=555&rounded=true&size=40" alt="Mattie Ball avatar" class="author-avatar" />
-            <span class="author-name">Mattie Ball</span>
-            <span class="post-date">June 15th, 2025</span>
+      <!-- Adventures Articles (shown by default) -->
+      <section class="blog-category blog-adventures active">
+        <!-- Example Article -->
+        <article id="adventure1" class="antimetal-post">
+          <header class="antimetal-header">
+            <h1 class="antimetal-title">Swimming</h1>
+            <p class="antimetal-subtitle">Exams over. I'm out in a lake somewhere, swimming across to explore islands.</p>
+            <div class="antimetal-meta-row">
+              <div class="author-info">
+                <img src="https://ui-avatars.com/api/?name=Mattie+Ball&background=eee&color=555&rounded=true&size=40" alt="Mattie Ball avatar" class="author-avatar" />
+                <span class="author-name">Mattie Ball</span>
+                <span class="post-date">June 15th, 2025</span>
+              </div>
+              <div class="meta-actions">
+                <button class="meta-btn" title="Like">&#10084;</button>
+                <button class="meta-btn" title="Comment">💬</button>
+                <button class="meta-btn" title="Share">🔗</button>
+              </div>
+            </div>
+          </header>
+          <div class="antimetal-post-content">
+            <p>Exams over. I'm out in a lake somewhere, swimming across to explore islands.</p>
           </div>
-          <div class="meta-actions">
-            <button class="meta-btn" title="Like">&#10084;</button>
-            <button class="meta-btn" title="Comment">💬</button>
-            <button class="meta-btn" title="Share">🔗</button>
+        </article>
+        <!-- Add more Adventures articles here, following the same structure -->
+      </section>
+      <!-- Engineering Articles -->
+      <section class="blog-category blog-engineering">
+        <article id="engineering1" class="antimetal-post">
+          <header class="antimetal-header">
+            <h1 class="antimetal-title">Robotics</h1>
+            <p class="antimetal-subtitle">There are several interesting applications of ML and software dev to the development of mechanical systems that I'm excited to explore.</p>
+            <div class="antimetal-meta-row">
+              <div class="author-info">
+                <img src="https://ui-avatars.com/api/?name=Mattie+Ball&background=eee&color=555&rounded=true&size=40" alt="Mattie Ball avatar" class="author-avatar" />
+                <span class="author-name">Mattie Ball</span>
+                <span class="post-date">June 15th, 2025</span>
+              </div>
+              <div class="meta-actions">
+                <button class="meta-btn" title="Like">&#10084;</button>
+                <button class="meta-btn" title="Comment">💬</button>
+                <button class="meta-btn" title="Share">🔗</button>
+              </div>
+            </div>
+          </header>
+          <div class="antimetal-post-content">
+            <ul>
+              <li>There are several interesting applications of ML and software dev to the development of mechanical systems that I'm excited to explore.</li>
+            </ul>
           </div>
-        </div>
-      </header>
-      <article class="antimetal-post">
-        <section id="Adventures">
-          <h2>Swimming</h2>
-          <p>Exams over. I'm out in a lake somewhere, swimming across to explore islands.</p>
-        </section>
-        <section id="Engineering">
-          <h2>Robotics</h2>
-          <ul>
-            <li>There are several interesting applications of ML and software dev to the development of mechanical systems that I'm excited to explore.</li>
-          </ul>
-        </section>
-        <section id="SoftwareDev">
-          <h2>Software Dev</h2>
-          <p>hfjds</p>
-        </section>
-      </article>
+        </article>
+        <!-- Add more Engineering articles here -->
+      </section>
+      <!-- Software Dev Articles -->
+      <section class="blog-category blog-software">
+        <article id="software1" class="antimetal-post">
+          <header class="antimetal-header">
+            <h1 class="antimetal-title">AI Didn’t Make Me Productive — It Made Me Feel Behind</h1>
+            <p class="antimetal-subtitle">So I started with what I actually knew.</p>
+            <div class="antimetal-meta-row">
+              <div class="author-info">
+                <img src="https://ui-avatars.com/api/?name=Mattie+Ball&background=eee&color=555&rounded=true&size=40" alt="Mattie Ball avatar" class="author-avatar" />
+                <span class="author-name">Mattie Ball</span>
+                <span class="post-date">June 15th, 2025</span>
+              </div>
+              <div class="meta-actions">
+                <button class="meta-btn" title="Like">&#10084;</button>
+                <button class="meta-btn" title="Comment">💬</button>
+                <button class="meta-btn" title="Share">🔗</button>
+              </div>
+            </div>
+          </header>
+          <div class="antimetal-post-content">
+            <p>Is it just me, or is AI sometimes... not that helpful?
+
+              I’ve been working on a simple landing page to showcase my engineering portfolio — something clean, to help me get freelance clients for mechanical engineering projects. So naturally, I thought: why not use AI?
+              
+              Everyone talks about how easy it is now. I keep seeing posts about 3-year-olds (okay, maybe not literally) launching entire businesses with tools like Lovable, Cursor, or ChatGPT. Just type a prompt, and boom — site shipped, product launched, SaaS money rolling in.
+              
+              I thought I could do the same.
+              
+              But the reality?
+              Lovable generated a working site in seconds — it was kind of magical.
+
+Until I opened the code.
+
+Suddenly I was looking at pages of TypeScript, Vite config files, API handlers, edge functions... and I realized I had no idea what any of it actually did. Trying to customize it was like trying to read a book in a language I didn’t speak. Every time I changed one thing, something else broke.
+
+So I spent hours trying to understand what AI had made for me — instead of actually building something I understood.
+
+That’s when it hit me:
+AI wasn’t helping. It was hiding the learning I needed to do.
+
+So I gave up.
+
+Not on the site — but on the AI.
+
+I opened a blank .html file and .css file and started from scratch.
+
+No React. No frameworks. No backend. No AI.
+
+Just the stuff I actually knew. Headings. Buttons. Margins. Flexbox. I slowly built a static portfolio site by hand — understanding every single line of code along the way.
+
+And you know what?
+
+It wasn’t impressive. It wasn’t "AI startup founder in San Francisco" energy. But it was mine. And it worked.
+
+It wasn’t fast, but it was real progress.
+
+Learning ≠ Speed
+The irony?
+
+Everyone says AI is a productivity tool. But for me, it became a distraction — because I was trying to speed through skills I hadn’t built yet.
+
+There’s nothing wrong with using AI. But if you don’t understand the foundations — if you’re still learning how websites work — it won’t feel like a shortcut. It’ll feel like a wall.
+
+Sometimes, the slow path is the shortcut.
+
+What I Learned
+If you’re new, AI can’t replace actual understanding.
+
+If you’re stuck, stripping everything back helps.
+
+A basic site you understand is better than a fancy one you can’t edit.
+
+You’re not behind. You’re building something real — and that counts.
+
+
+              
+              </p>
+          </div>
+        </article>
+        <!-- Add more Software Dev articles here -->
+      </section>
     </main>
   </div>
 
-  <script src="blog.js"></script>
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const mobileMenuButton = document.querySelector('.mobile-menu-button');
-      const navLinks = document.querySelector('.nav-links');
-      mobileMenuButton.addEventListener('click', function() {
-        navLinks.classList.toggle('active');
-        mobileMenuButton.classList.toggle('active');
-      });
-    });
+    // Simple CSS-only tab logic: clicking a category highlights it and shows its articles
+    // (No JS needed, just use :target and :checked with hidden radio buttons if you want to expand)
+    // For now, Adventures is active by default. To change, add 'active' to the desired category and section.
   </script>
 </body>
 </html> 

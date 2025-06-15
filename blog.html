@@ -12,16 +12,20 @@
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body class="blog-body">
-  <nav class="navbar">
+  <nav>
     <div class="nav-content">
       <a href="index.html" class="logo">MB</a>
-      <button class="mobile-menu-button" aria-label="Toggle menu">☰</button>
       <div class="nav-links">
         <a href="index.html">Home</a>
         <a href="blog.html" class="active">Learning Log</a>
         <a href="index.html#about">About</a>
         <a href="index.html#contact">Contact</a>
       </div>
+      <button class="mobile-menu-button" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
     </div>
   </nav>
 
@@ -131,5 +135,16 @@
 
   <script src="script.js"></script>
   <script src="blog.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const mobileMenuButton = document.querySelector('.mobile-menu-button');
+      const navLinks = document.querySelector('.nav-links');
+      
+      mobileMenuButton.addEventListener('click', function() {
+        navLinks.classList.toggle('active');
+        mobileMenuButton.classList.toggle('active');
+      });
+    });
+  </script>
 </body>
 </html> 

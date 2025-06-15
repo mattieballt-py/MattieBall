@@ -214,6 +214,49 @@ button:hover {
   background-color: #FF5252;
 }
 
+.form-status {
+  margin-top: 1rem;
+  padding: 0.5rem;
+  border-radius: var(--border-radius);
+  text-align: center;
+  font-weight: 500;
+  transition: all var(--transition-speed);
+}
+
+button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+/* Add loading state for button */
+button.loading {
+  position: relative;
+  color: transparent;
+}
+
+button.loading::after {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  top: 50%;
+  left: 50%;
+  margin: -10px 0 0 -10px;
+  border: 2px solid #ffffff;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: button-loading-spinner 0.6s linear infinite;
+}
+
+@keyframes button-loading-spinner {
+  from {
+    transform: rotate(0turn);
+  }
+  to {
+    transform: rotate(1turn);
+  }
+}
+
 footer {
   text-align: center;
   padding: clamp(1.5rem, 3vw, 2rem);

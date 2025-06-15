@@ -1,7 +1,7 @@
 import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
 
 const supabase = createClient(
-  "https://YOUR_PROJECT_ID.supabase.co",
+  "postgresql://postgres:[YOUR-PASSWORD]@db.taevzmilfbtdbyjlegwh.supabase.co:5432/postgres",
   "YOUR_PUBLIC_ANON_KEY"
 );
 

@@ -3,26 +3,81 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MBT Consultancy</title>
+  <title>Mattie Ball - Engineering Portfolio</title>
   <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <header>
-    <h1>MBT Consultancy</h1>
-  </header>
+  <nav class="navbar">
+    <div class="nav-content">
+      <a href="#" class="logo">MB</a>
+      <div class="nav-links">
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+  </nav>
 
   <main>
-    <section>
-      <h2>Contact Us</h2>
+    <section class="hero">
+      <div class="hero-content">
+        <h1>Mattie Ball</h1>
+        <p class="subtitle">Mechanical Engineer & Technical Consultant</p>
+        <div class="hero-description">
+          <p>Transforming complex engineering challenges into elegant solutions</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="about">
+      <h2>About Me</h2>
+      <div class="about-content">
+        <p>I'm a mechanical engineer with a passion for innovative solutions and technical excellence. My expertise lies in combining traditional engineering principles with modern approaches to solve complex problems.</p>
+      </div>
+    </section>
+
+    <section id="projects" class="projects">
+      <h2>Featured Projects</h2>
+      <div class="project-grid">
+        <article class="project-card">
+          <h3>Project One</h3>
+          <p>Description of the first major project and its impact.</p>
+        </article>
+        <article class="project-card">
+          <h3>Project Two</h3>
+          <p>Description of the second major project and its impact.</p>
+        </article>
+        <article class="project-card">
+          <h3>Project Three</h3>
+          <p>Description of the third major project and its impact.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="contact" class="contact">
+      <h2>Get in Touch</h2>
       <form id="contact-form">
-        <input type="text" name="name" placeholder="Your Name" required />
-        <input type="email" name="email" placeholder="Your Email" required />
-        <textarea name="message" placeholder="Your Message" required></textarea>
-        <button type="submit">Send</button>
+        <div class="form-group">
+          <input type="text" name="name" placeholder="Your Name" required />
+        </div>
+        <div class="form-group">
+          <input type="email" name="email" placeholder="Your Email" required />
+        </div>
+        <div class="form-group">
+          <textarea name="message" placeholder="Your Message" required></textarea>
+        </div>
+        <button type="submit">Send Message</button>
       </form>
       <p id="status"></p>
     </section>
   </main>
+
+  <footer>
+    <p>&copy; 2024 Mattie Ball. All rights reserved.</p>
+  </footer>
 
   <script type="module" src="contact.js"></script>
 </body>

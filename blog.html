@@ -143,15 +143,10 @@
             <p>Is it just me, or is AI sometimes... not that helpful?</p>
 
             <p>I've been working on a simple landing page to showcase my engineering portfolio — something clean, to help me get freelance clients for mechanical engineering projects. So naturally, I thought: <strong>why not use AI?</strong></p>
-
             <p>Everyone talks about how easy it is now. I keep seeing posts about 3-year-olds (okay, maybe not literally) launching entire businesses with tools like Lovable, Cursor, or ChatGPT. Just type a prompt, and boom — site shipped, product launched, SaaS money rolling in.</p>
-
             <p>I thought I could do the same.</p>
-
             <h2>When AI Feels Like a Shortcut You Can't Take</h2>
-
             <p>Lovable generated a working site in seconds — it was kind of magical.</p>
-
             <p>Until I opened the code.</p>
 
             <p>Suddenly I was looking at pages of TypeScript, Vite config files, API handlers, edge functions... and I realized I had no idea what any of it actually did. Trying to customize it was like trying to read a book in a language I didn't speak. Every time I changed one thing, something else broke.</p>
@@ -234,6 +229,24 @@
         }
       }
 
+      // Function to get category from article ID
+      function getCategoryFromArticleId(articleId) {
+        if (articleId.startsWith('adventure')) return 'adventures';
+        if (articleId.startsWith('engineering')) return 'engineering';
+        if (articleId.startsWith('software')) return 'software';
+        return null;
+      }
+
+      // Function to activate category by name
+      function activateCategoryByName(categoryName) {
+        const category = Array.from(categories).find(c => 
+          c.querySelector('span').textContent.toLowerCase() === categoryName
+        );
+        if (category) {
+          switchCategory(category);
+        }
+      }
+
       categories.forEach(category => {
         category.addEventListener('click', () => switchCategory(category));
         
@@ -255,8 +268,16 @@
         // Add active class to clicked link
         link.classList.add('active');
         
-        // Scroll to the article with smooth behavior
+        // Get the article ID and determine its category
         const targetId = link.getAttribute('href').substring(1);
+        const categoryName = getCategoryFromArticleId(targetId);
+        
+        // Activate the correct category section
+        if (categoryName) {
+          activateCategoryByName(categoryName);
+        }
+        
+        // Scroll to the article with smooth behavior
         const targetArticle = document.getElementById(targetId);
         if (targetArticle) {
           const headerOffset = 100;
@@ -286,6 +307,12 @@
             if (link) {
               articleLinks.forEach(l => l.classList.remove('active'));
               link.classList.add('active');
+              
+              // Also activate the correct category when scrolling
+              const categoryName = getCategoryFromArticleId(id);
+              if (categoryName) {
+                activateCategoryByName(categoryName);
+              }
             }
           }
         });

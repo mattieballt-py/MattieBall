@@ -209,42 +209,93 @@
       const categories = document.querySelectorAll('.toc-category');
       const blogSections = document.querySelectorAll('.blog-category');
       
-      categories.forEach(category => {
-        category.addEventListener('click', function() {
-          // Remove active class from all categories
-          categories.forEach(c => c.classList.remove('active'));
-          // Add active class to clicked category
-          this.classList.add('active');
-          
-          // Hide all blog sections
-          blogSections.forEach(section => section.classList.remove('active'));
-          
-          // Show the corresponding blog section
-          const categoryName = this.querySelector('span').textContent.toLowerCase();
-          const targetSection = document.querySelector(`.blog-${categoryName}`);
-          if (targetSection) {
+      function switchCategory(category) {
+        // Remove active class from all categories
+        categories.forEach(c => c.classList.remove('active'));
+        // Add active class to clicked category
+        category.classList.add('active');
+        
+        // Hide all blog sections with fade out
+        blogSections.forEach(section => {
+          section.style.opacity = '0';
+          setTimeout(() => {
+            section.classList.remove('active');
+          }, 200);
+        });
+        
+        // Show the corresponding blog section with fade in
+        const categoryName = category.querySelector('span').textContent.toLowerCase();
+        const targetSection = document.querySelector(`.blog-${categoryName}`);
+        if (targetSection) {
+          setTimeout(() => {
             targetSection.classList.add('active');
+            targetSection.style.opacity = '1';
+          }, 200);
+        }
+      }
+
+      categories.forEach(category => {
+        category.addEventListener('click', () => switchCategory(category));
+        
+        // Add keyboard navigation
+        category.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            switchCategory(category);
           }
         });
       });
 
       // Handle article navigation
       const articleLinks = document.querySelectorAll('.toc-articles a');
+      
+      function navigateToArticle(link) {
+        // Remove active class from all links
+        articleLinks.forEach(l => l.classList.remove('active'));
+        // Add active class to clicked link
+        link.classList.add('active');
+        
+        // Scroll to the article with smooth behavior
+        const targetId = link.getAttribute('href').substring(1);
+        const targetArticle = document.getElementById(targetId);
+        if (targetArticle) {
+          const headerOffset = 100;
+          const elementPosition = targetArticle.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+        }
+      }
+
       articleLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
+        link.addEventListener('click', (e) => {
           e.preventDefault();
-          // Remove active class from all links
-          articleLinks.forEach(l => l.classList.remove('active'));
-          // Add active class to clicked link
-          this.classList.add('active');
-          
-          // Scroll to the article
-          const targetId = this.getAttribute('href').substring(1);
-          const targetArticle = document.getElementById(targetId);
-          if (targetArticle) {
-            targetArticle.scrollIntoView({ behavior: 'smooth' });
+          navigateToArticle(link);
+        });
+      });
+
+      // Add intersection observer for article visibility
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const id = entry.target.id;
+            const link = document.querySelector(`.toc-articles a[href="#${id}"]`);
+            if (link) {
+              articleLinks.forEach(l => l.classList.remove('active'));
+              link.classList.add('active');
+            }
           }
         });
+      }, {
+        rootMargin: '-20% 0px -80% 0px'
+      });
+
+      // Observe all articles
+      document.querySelectorAll('.mattie-blog-post').forEach(post => {
+        observer.observe(post);
       });
     });
   </script>

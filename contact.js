@@ -1,8 +1,8 @@
 import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
 
 const supabase = createClient(
-  "postgresql://postgres:[YOUR-PASSWORD]@db.taevzmilfbtdbyjlegwh.supabase.co:5432/postgres",
-  "YOUR_PUBLIC_ANON_KEY"
+  'https://taevzmilfbtdbyjlegwh.supabase.co',
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRhZXZ6bWlsZmJ0ZGJ5amxlZ3doIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk3MjMwMDIsImV4cCI6MjA2NTI5OTAwMn0.LUEnzlKZIW-B1Ih09ypovqA3C1gKnCONCHjk8n8Dmj4"
 );
 
 document.getElementById("contact-form").addEventListener("submit", async (e) => {

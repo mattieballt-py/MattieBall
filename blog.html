@@ -29,117 +29,61 @@
     </div>
   </nav>
 
-  <div class="blog-container">
-    <!-- Sidebar Navigation -->
-    <aside class="blog-sidebar">
-      <div class="sidebar-content">
-        <h2>Learning Log</h2>
-        <p class="sidebar-description">Documenting my engineering journey</p>
-        
-        <div class="category-section">
-          <h3>Categories</h3>
-          <ul class="category-list">
-            <li><a href="#mechanical" class="active">Mechanical</a></li>
-            <li><a href="#electrical">Electrical</a></li>
-            <li><a href="#software">Software</a></li>
-            <li><a href="#projects">Projects</a></li>
-          </ul>
-        </div>
-
-        <div class="recent-posts">
-          <h3>Recent Posts</h3>
-          <ul class="post-list">
-            <li>
-              <a href="#post1">
-                <span class="post-date">2024-03-20</span>
-                <span class="post-title">Understanding Thermal Dynamics</span>
-              </a>
-            </li>
-            <li>
-              <a href="#post2">
-                <span class="post-date">2024-03-18</span>
-                <span class="post-title">CAD Modeling Best Practices</span>
-              </a>
-            </li>
-            <li>
-              <a href="#post3">
-                <span class="post-date">2024-03-15</span>
-                <span class="post-title">Circuit Design Fundamentals</span>
-              </a>
-            </li>
-          </ul>
-        </div>
+  <div class="antimetal-blog-container">
+    <!-- Sidebar Table of Contents -->
+    <aside class="toc-sidebar">
+      <div class="toc-card">
+        <h3>CONTENTS</h3>
+        <ul>
+          <li><a href="#Adventures">Adventures</a></li>
+          <li><a href="#Engineering">Engineering</a></li>
+          <li><a href="#SoftwareDev">Software Dev</a></li>
+        </ul>
       </div>
     </aside>
 
     <!-- Main Content -->
-    <main class="blog-main">
-      <article class="blog-post">
-        <header class="post-header">
-          <div class="post-meta">
-            <span class="post-date">March 20, 2024</span>
-            <span class="post-category">Mechanical</span>
+    <main class="antimetal-main">
+      <header class="antimetal-header">
+        <h1 class="antimetal-title">Creating a portfolio site</h1>
+        <p class="antimetal-subtitle">When shortcuts become the long cuts. How AI doesn't always help.</p>
+        <div class="antimetal-meta-row">
+          <div class="author-info">
+            <img src="https://ui-avatars.com/api/?name=Mattie+Ball&background=eee&color=555&rounded=true&size=40" alt="Mattie Ball avatar" class="author-avatar" />
+            <span class="author-name">Mattie Ball</span>
+            <span class="post-date">June 15th, 2025</span>
           </div>
-          <h1>Understanding Thermal Dynamics in Engineering Design</h1>
-          <p class="post-excerpt">Exploring the fundamental principles of thermal dynamics and their application in modern engineering design.</p>
-        </header>
-
-        <div class="post-content">
-          <h2>The Challenge</h2>
-          <p>When designing mechanical systems, understanding thermal dynamics is crucial. I recently encountered an interesting challenge while working on a heat transfer project...</p>
-
-          <h2>What I Learned</h2>
-          <p>The key principles of thermal dynamics that proved essential:</p>
-          <ul>
-            <li>Heat transfer mechanisms: conduction, convection, and radiation</li>
-            <li>Thermal conductivity of different materials</li>
-            <li>Temperature gradient effects on material properties</li>
-          </ul>
-
-          <h2>The Solution</h2>
-          <p>After several iterations and experiments, I developed a solution that effectively managed the thermal requirements...</p>
-
-          <div class="post-tags">
-            <span class="tag">Thermal Dynamics</span>
-            <span class="tag">Heat Transfer</span>
-            <span class="tag">Engineering Design</span>
+          <div class="meta-actions">
+            <button class="meta-btn" title="Like">&#10084;</button>
+            <button class="meta-btn" title="Comment">💬</button>
+            <button class="meta-btn" title="Share">🔗</button>
           </div>
         </div>
+      </header>
+      <article class="antimetal-post">
+        <section id="Adventures">
+          <h2>Swimming</h2>
+          <p>Exams over. I'm out in a lake somewhere, swimming across to explore islands.</p>
+        </section>
+        <section id="Engineering">
+          <h2>Robotics</h2>
+          <ul>
+            <li>There are several interesting applications of ML and software dev to the development of mechanical systems that I'm excited to explore.</li>
+          </ul>
+        </section>
+        <section id="SoftwareDev">
+          <h2>Software Dev</h2>
+          <p>hfjds</p>
+        </section>
       </article>
-
-      <!-- Template for new posts -->
-      <div class="post-template" style="display: none;">
-        <article class="blog-post">
-          <header class="post-header">
-            <div class="post-meta">
-              <span class="post-date">YYYY-MM-DD</span>
-              <span class="post-category">Category</span>
-            </div>
-            <h1>Post Title</h1>
-            <p class="post-excerpt">Brief description of the post.</p>
-          </header>
-
-          <div class="post-content">
-            <h2>Section Title</h2>
-            <p>Content goes here...</p>
-
-            <div class="post-tags">
-              <span class="tag">Tag 1</span>
-              <span class="tag">Tag 2</span>
-            </div>
-          </div>
-        </article>
-      </div>
     </main>
   </div>
 
-  <script src="script.js"></script>
   <script src="blog.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       const mobileMenuButton = document.querySelector('.mobile-menu-button');
       const navLinks = document.querySelector('.nav-links');
-      
       mobileMenuButton.addEventListener('click', function() {
         navLinks.classList.toggle('active');
         mobileMenuButton.classList.toggle('active');

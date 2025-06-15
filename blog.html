@@ -39,7 +39,6 @@
           <li class="toc-category active" tabindex="0">
             <span>Adventures</span>
             <ul class="toc-articles">
-              <!-- Add new articles for Adventures here -->
               <li><a href="#adventure1" class="active">Swimming</a></li>
               <li><a href="#adventure2">Climbing</a></li>
             </ul>
@@ -48,7 +47,6 @@
           <li class="toc-category" tabindex="0">
             <span>Engineering</span>
             <ul class="toc-articles">
-              <!-- Add new articles for Engineering here -->
               <li><a href="#engineering1">Robotics</a></li>
               <li><a href="#engineering2">Thermal Dynamics</a></li>
             </ul>
@@ -57,7 +55,6 @@
           <li class="toc-category" tabindex="0">
             <span>Software Dev</span>
             <ul class="toc-articles">
-              <!-- Add new articles for Software Dev here -->
               <li><a href="#software1">Portfolio Site</a></li>
               <li><a href="#software2">ML for Engineers</a></li>
             </ul>
@@ -207,9 +204,49 @@
   </div>
 
   <script>
-    // Simple CSS-only tab logic: clicking a category highlights it and shows its articles
-    // (No JS needed, just use :target and :checked with hidden radio buttons if you want to expand)
-    // For now, Adventures is active by default. To change, add 'active' to the desired category and section.
+    document.addEventListener('DOMContentLoaded', function() {
+      // Handle category switching
+      const categories = document.querySelectorAll('.toc-category');
+      const blogSections = document.querySelectorAll('.blog-category');
+      
+      categories.forEach(category => {
+        category.addEventListener('click', function() {
+          // Remove active class from all categories
+          categories.forEach(c => c.classList.remove('active'));
+          // Add active class to clicked category
+          this.classList.add('active');
+          
+          // Hide all blog sections
+          blogSections.forEach(section => section.classList.remove('active'));
+          
+          // Show the corresponding blog section
+          const categoryName = this.querySelector('span').textContent.toLowerCase();
+          const targetSection = document.querySelector(`.blog-${categoryName}`);
+          if (targetSection) {
+            targetSection.classList.add('active');
+          }
+        });
+      });
+
+      // Handle article navigation
+      const articleLinks = document.querySelectorAll('.toc-articles a');
+      articleLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          // Remove active class from all links
+          articleLinks.forEach(l => l.classList.remove('active'));
+          // Add active class to clicked link
+          this.classList.add('active');
+          
+          // Scroll to the article
+          const targetId = this.getAttribute('href').substring(1);
+          const targetArticle = document.getElementById(targetId);
+          if (targetArticle) {
+            targetArticle.scrollIntoView({ behavior: 'smooth' });
+          }
+        });
+      });
+    });
   </script>
 </body>
 </html> 

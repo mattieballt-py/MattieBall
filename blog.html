@@ -210,22 +210,21 @@
         // Add active class to clicked category
         category.classList.add('active');
         
-        // Hide all blog sections with fade out
+        // Hide all blog sections
         blogSections.forEach(section => {
+          section.classList.remove('active');
           section.style.opacity = '0';
-          setTimeout(() => {
-            section.classList.remove('active');
-          }, 200);
         });
         
-        // Show the corresponding blog section with fade in
+        // Show the corresponding blog section
         const categoryName = category.querySelector('span').textContent.toLowerCase();
         const targetSection = document.querySelector(`.blog-${categoryName}`);
         if (targetSection) {
-          setTimeout(() => {
-            targetSection.classList.add('active');
+          targetSection.classList.add('active');
+          // Use requestAnimationFrame to ensure the display: block has taken effect
+          requestAnimationFrame(() => {
             targetSection.style.opacity = '1';
-          }, 200);
+          });
         }
       }
 
@@ -245,6 +244,11 @@
         if (category) {
           switchCategory(category);
         }
+      }
+
+      // Initialize with first category active
+      if (categories.length > 0) {
+        switchCategory(categories[0]);
       }
 
       categories.forEach(category => {
@@ -280,14 +284,17 @@
         // Scroll to the article with smooth behavior
         const targetArticle = document.getElementById(targetId);
         if (targetArticle) {
-          const headerOffset = 100;
-          const elementPosition = targetArticle.getBoundingClientRect().top;
-          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+          // Wait for the category switch animation to complete
+          setTimeout(() => {
+            const headerOffset = 100;
+            const elementPosition = targetArticle.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
 
-          window.scrollTo({
-            top: offsetPosition,
-            behavior: 'smooth'
-          });
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: 'smooth'
+            });
+          }, 200);
         }
       }
 

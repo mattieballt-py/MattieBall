@@ -222,6 +222,7 @@
   .contact {
     max-width: min(600px, 90%);
     margin: 6rem auto;
+    padding-top: 5rem;
   }
   
   .form-group {
@@ -410,5 +411,35 @@
       transition: none !important;
       animation: none !important;
     }
+  }
+  
+  .footer {
+    background-color: #f8f8f8;
+    padding: 1rem 0;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .social-icons {
+    display: flex;
+    gap: 1.5rem;
+  }
+  
+  .social-icons a {
+    font-size: 1.5rem;
+    color: #333;
+    text-decoration: none;
+  }
+  
+  .social-icons i {
+    line-height: 1;
+    vertical-align: middle;
   }
   

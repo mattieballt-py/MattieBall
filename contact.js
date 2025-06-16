@@ -7,7 +7,7 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 document.addEventListener('DOMContentLoaded', () => {
-  const form = document.getElementById('contact-form');
+  const form = document.getElementById('contactmessages');
   const status = document.getElementById('status');
 
   if (!form) {

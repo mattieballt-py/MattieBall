@@ -57,9 +57,13 @@ document.addEventListener('DOMContentLoaded', () => {
         ])
         .select();
 
-      if (error) {
-        throw error;
-      }
+        if (error) {
+          console.error('Supabase error:', error);
+          status.textContent = `Error: ${error.message}`;
+          status.style.color = 'red';
+          return;
+        }
+        
 
       // Success
       status.textContent = 'Message sent successfully!';

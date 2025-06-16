@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Insert data into Supabase
       const { data, error } = await supabase
-        .from('contact_submissions')
+        .from('ContactMessages')
         .insert([
           {
             name,

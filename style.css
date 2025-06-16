@@ -169,6 +169,7 @@
   }
   
   .project-card {
+    
     background: white;
     padding: clamp(1.5rem, 3vw, 2rem);
     border-radius: var(--border-radius);
@@ -178,6 +179,13 @@
     display: flex;
     flex-direction: column;
     position: relative; /* Needed for year positioning */
+  }
+  
+  .project-card img.project-image {
+    max-height: 180px;
+    width: auto;
+    max-width: 100%;
+    object-fit: cover;
   }
   
   .project-card:hover {

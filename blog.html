@@ -58,7 +58,7 @@
     <main class="mattie-blog-main">
       <!-- Adventures Articles (shown by default) -->
       <section class="blog-category blog-adventures active" data-category="adventures" style="display: block; opacity: 1;">
-        <article id="adventure1" class="mattie-blog-post">
+        <article id="adventure1" class="mattie-blog-post blog-article">
           <header class="mattie-blog-header">
             <h1 class="mattie-blog-title">Swimming</h1>
             <p class="mattie-blog-subtitle">Exams over. I'm out in a lake somewhere, swimming across to explore islands.</p>
@@ -82,7 +82,7 @@
       </section>
           <!-- Engineering Articles -->     
       <section class="blog-category blog-engineering" data-category="engineering" style="display: none; opacity: 0;">
-        <article id="engineering1" class="mattie-blog-post">
+        <article id="engineering1" class="mattie-blog-post blog-article">
           <header class="mattie-blog-header">
             <h1 class="mattie-blog-title">Robotics</h1>
             <p class="mattie-blog-subtitle">There are several interesting applications of ML and software dev to the development of mechanical systems that I'm excited to explore.</p>
@@ -107,7 +107,7 @@
         </article>
       </section>
       <section class="blog-category blog-engineering" data-category="engineering" style="display: none; opacity: 0;">
-        <article id="engineering2" class="mattie-blog-post">
+        <article id="engineering2" class="mattie-blog-post blog-article">
           <header class="mattie-blog-header">
             <h1 class="mattie-blog-title">F1 in Schools</h1>
             <p class="mattie-blog-subtitle">Competing internationally in the largest schools engineering competition.</p>
@@ -210,7 +210,7 @@
       </section>
 
       <section class="blog-category blog-software" data-category="software" style="display: none; opacity: 0;">
-        <article id="software1" class="mattie-blog-post">
+        <article id="software1" class="mattie-blog-post blog-article">
           <header class="mattie-blog-header">
             <h1 class="mattie-blog-title">AI Didn't Make Me Productive — It Made Me Feel Behind</h1>
             <p class="mattie-blog-subtitle">So I started with what I actually knew.</p>
@@ -272,8 +272,63 @@
       const categories = document.querySelectorAll('.toc-category');
       const blogSections = document.querySelectorAll('.blog-category');
       const articleLinks = document.querySelectorAll('.toc-articles a');
+      const blogArticles = document.querySelectorAll('.blog-article');
   
-      function switchCategory(categoryElement, callback = null) {
+      // Function to handle hash changes
+      function handleHashChange() {
+        const hash = window.location.hash.substring(1);
+        if (hash) {
+          showArticle(hash);
+        }
+      }
+  
+      // Function to show a specific article
+      function showArticle(articleId) {
+        // Hide all articles
+        blogArticles.forEach(article => {
+          article.style.display = 'none';
+        });
+  
+        // Show the target article
+        const targetArticle = document.getElementById(articleId);
+        if (targetArticle) {
+          targetArticle.style.display = 'block';
+          
+          // Get the category of the article
+          const categoryName = getCategoryFromArticleId(articleId);
+          if (categoryName) {
+            activateCategoryByName(categoryName);
+          }
+  
+          // Scroll to the article
+          const headerOffset = 100;
+          const elementPosition = targetArticle.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+  
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+        }
+      }
+  
+      function getCategoryFromArticleId(articleId) {
+        if (articleId.startsWith('adventure')) return 'adventures';
+        if (articleId.startsWith('engineering')) return 'engineering';
+        if (articleId.startsWith('software')) return 'software';
+        return null;
+      }
+  
+      function activateCategoryByName(categoryName) {
+        const category = Array.from(categories).find(c => 
+          c.dataset.category === categoryName
+        );
+        if (category) {
+          switchCategory(category);
+        }
+      }
+  
+      function switchCategory(categoryElement) {
         categories.forEach(c => c.classList.remove('active'));
         categoryElement.classList.add('active');
   
@@ -299,60 +354,23 @@
           void targetSection.offsetWidth;
           targetSection.style.opacity = '1';
           targetSection.classList.add('active');
-  
-          if (callback) {
-            targetSection.addEventListener('transitionend', function handler() {
-              callback();
-              targetSection.removeEventListener('transitionend', handler);
-            }, { once: true });
-          }
         }
       }
   
-      function getCategoryFromArticleId(articleId) {
-        if (articleId.startsWith('adventure')) return 'adventures';
-        if (articleId.startsWith('engineering')) return 'engineering';
-        if (articleId.startsWith('software')) return 'software';
-        return null;
-      }
+      // Handle link clicks
+      articleLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          const targetId = link.getAttribute('href').substring(1);
+          showArticle(targetId);
+          
+          // Update active state of links
+          articleLinks.forEach(l => l.classList.remove('active'));
+          link.classList.add('active');
+        });
+      });
   
-      function activateCategoryByName(categoryName, callback = null) {
-        const category = Array.from(categories).find(c => 
-          c.dataset.category === categoryName
-        );
-        if (category) {
-          switchCategory(category, callback);
-        }
-      }
-  
-      function navigateToArticle(link) {
-        articleLinks.forEach(l => l.classList.remove('active'));
-        link.classList.add('active');
-  
-        const targetId = link.getAttribute('href').substring(1);
-        const categoryName = getCategoryFromArticleId(targetId);
-  
-        const scrollIntoView = () => {
-          const targetArticle = document.getElementById(targetId);
-          if (targetArticle) {
-            const headerOffset = 100;
-            const elementPosition = targetArticle.getBoundingClientRect().top;
-            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-  
-            window.scrollTo({
-              top: offsetPosition,
-              behavior: 'smooth'
-            });
-          }
-        };
-  
-        if (categoryName) {
-          activateCategoryByName(categoryName, scrollIntoView);
-        } else {
-          scrollIntoView();
-        }
-      }
-  
+      // Handle category clicks
       categories.forEach(category => {
         category.addEventListener('click', () => switchCategory(category));
         category.addEventListener('keydown', (e) => {
@@ -363,19 +381,19 @@
         });
       });
   
-      articleLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
-          e.preventDefault();
-          navigateToArticle(link);
-        });
-      });
+      // Handle initial load and hash changes
+      window.addEventListener('hashchange', handleHashChange);
+      handleHashChange();
   
-      // Initial load
-      const firstArticleLink = articleLinks[0];
-      if (firstArticleLink) {
-        navigateToArticle(firstArticleLink);
-      } else if (categories.length > 0) {
-        switchCategory(categories[0]);
+      // Initial load if no hash
+      if (!window.location.hash) {
+        const firstArticleLink = articleLinks[0];
+        if (firstArticleLink) {
+          const targetId = firstArticleLink.getAttribute('href').substring(1);
+          showArticle(targetId);
+        } else if (categories.length > 0) {
+          switchCategory(categories[0]);
+        }
       }
     });
   </script>

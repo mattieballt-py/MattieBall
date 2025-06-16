@@ -98,6 +98,7 @@
     max-width: var(--container-width);
     margin: 0 auto;
     padding: 6rem var(--spacing-unit) 2rem;
+    padding-top: 1rem;
   }
   
   /* Hero Section */
@@ -165,7 +166,7 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
     gap: clamp(1.5rem, 3vw, 2rem);
-    margin-top: 3rem;
+    margin-top: 1rem;
   }
   
   .project-card {

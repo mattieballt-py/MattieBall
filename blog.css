@@ -58,6 +58,7 @@ body {
 
 .toc-category {
   margin-bottom: 1rem;
+  cursor: pointer;
 }
 
 .toc-category span {
@@ -72,11 +73,13 @@ body {
   list-style: none;
   padding: 0.5rem 0 0 0.5rem;
   margin: 0;
-  display: none;
+  max-height: 0; /* Controls height for collapsed state */
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
 }
 
 .toc-category.active .toc-articles {
-  display: block;
+  max-height: 500px; /* Expands to show content, adjust if content exceeds 500px */
 }
 
 .toc-articles a {
@@ -154,18 +157,18 @@ body {
 }
 
 .meta-btn {
-  background: var(--background-secondary);
+  background-color: var(--background-secondary) !important;
   border: none;
   border-radius: 6px;
   padding: 0.5rem;
-  color: var(--text-secondary);
+  color: var(--text-secondary) !important;
   cursor: pointer;
   transition: all 0.2s;
 }
 
 .meta-btn:hover {
-  background: var(--accent-color);
-  color: white;
+  background-color: var(--accent-color) !important;
+  color: white !important;
 }
 
 .mattie-blog-post-content {
@@ -212,13 +215,11 @@ body {
 }
 
 .blog-category {
-  display: none;
   opacity: 0;
   transition: opacity 0.2s ease-in-out;
 }
 
 .blog-category.active {
-  display: block;
   opacity: 1;
 }
 

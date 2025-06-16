@@ -36,10 +36,10 @@
         <h3>CONTENTS</h3>
         <ul class="toc-categories">
           <!-- Adventures Category -->
-          <li class="toc-category active" tabindex="0">
+          <li class="toc-category" tabindex="0">
             <span>Adventures</span>
             <ul class="toc-articles">
-              <li><a href="#adventure1" class="active">Swimming</a></li>
+              <li><a href="#adventure1">Swimming</a></li>
               <li><a href="#adventure2">Climbing</a></li>
             </ul>
           </li>
@@ -66,7 +66,7 @@
     <!-- Main Content: Only show articles from the selected category -->
     <main class="mattie-blog-main">
       <!-- Adventures Articles (shown by default) -->
-      <section class="blog-category blog-adventures active">
+      <section class="blog-category blog-adventures">
         <!-- Example Article -->
         <article id="adventure1" class="mattie-blog-post">
           <header class="mattie-blog-header">
@@ -204,27 +204,42 @@
       const categories = document.querySelectorAll('.toc-category');
       const blogSections = document.querySelectorAll('.blog-category');
       
-      function switchCategory(category) {
-        // Remove active class from all categories
+      function switchCategory(category, onTransitionCompleteCallback = null) {
+        // Remove active class from all categories in TOC
         categories.forEach(c => c.classList.remove('active'));
         // Add active class to clicked category
         category.classList.add('active');
         
-        // Hide all blog sections
+        // Hide all blog sections with fade out, then set display: none
         blogSections.forEach(section => {
-          section.classList.remove('active');
-          section.style.opacity = '0';
+          if (section.classList.contains('active')) {
+            section.style.opacity = '0';
+            section.addEventListener('transitionend', function handler() {
+              section.style.display = 'none';
+              section.removeEventListener('transitionend', handler);
+            }, {once: true});
+          } else {
+            // If not active, ensure it's hidden instantly without transition
+            section.style.display = 'none';
+            section.style.opacity = '0';
+          }
         });
         
-        // Show the corresponding blog section
+        // Show the corresponding blog section with fade in
         const categoryName = category.querySelector('span').textContent.toLowerCase();
         const targetSection = document.querySelector(`.blog-${categoryName}`);
         if (targetSection) {
-          targetSection.classList.add('active');
-          // Use requestAnimationFrame to ensure the display: block has taken effect
-          requestAnimationFrame(() => {
-            targetSection.style.opacity = '1';
-          });
+          targetSection.style.display = 'block'; // Set display: block first
+          // Force reflow to ensure display: block is applied before opacity transition
+          void targetSection.offsetWidth; 
+          targetSection.style.opacity = '1';
+
+          if (onTransitionCompleteCallback) {
+            targetSection.addEventListener('transitionend', function handler() {
+              onTransitionCompleteCallback();
+              targetSection.removeEventListener('transitionend', handler);
+            }, {once: true});
+          }
         }
       }
 
@@ -237,31 +252,14 @@
       }
 
       // Function to activate category by name
-      function activateCategoryByName(categoryName) {
+      function activateCategoryByName(categoryName, callback = null) {
         const category = Array.from(categories).find(c => 
           c.querySelector('span').textContent.toLowerCase() === categoryName
         );
         if (category) {
-          switchCategory(category);
+          switchCategory(category, callback);
         }
       }
-
-      // Initialize with first category active
-      if (categories.length > 0) {
-        switchCategory(categories[0]);
-      }
-
-      categories.forEach(category => {
-        category.addEventListener('click', () => switchCategory(category));
-        
-        // Add keyboard navigation
-        category.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            switchCategory(category);
-          }
-        });
-      });
 
       // Handle article navigation
       const articleLinks = document.querySelectorAll('.toc-articles a');
@@ -276,16 +274,10 @@
         const targetId = link.getAttribute('href').substring(1);
         const categoryName = getCategoryFromArticleId(targetId);
         
-        // Activate the correct category section
-        if (categoryName) {
-          activateCategoryByName(categoryName);
-        }
-        
         // Scroll to the article with smooth behavior
-        const targetArticle = document.getElementById(targetId);
-        if (targetArticle) {
-          // Wait for the category switch animation to complete
-          setTimeout(() => {
+        const scrollIntoView = () => {
+          const targetArticle = document.getElementById(targetId);
+          if (targetArticle) {
             const headerOffset = 100;
             const elementPosition = targetArticle.getBoundingClientRect().top;
             const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
@@ -294,9 +286,30 @@
               top: offsetPosition,
               behavior: 'smooth'
             });
-          }, 200);
+          }
+        };
+
+        // Activate the correct category section and then scroll
+        if (categoryName) {
+          activateCategoryByName(categoryName, scrollIntoView);
+        } else {
+          // If category name is null (shouldn't happen with current setup), just scroll
+          scrollIntoView();
         }
       }
+
+      // Add event listeners for category clicks (already exists, but for clarity)
+      categories.forEach(category => {
+        category.addEventListener('click', () => switchCategory(category));
+        
+        // Add keyboard navigation
+        category.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            switchCategory(category);
+          }
+        });
+      });
 
       articleLinks.forEach(link => {
         link.addEventListener('click', (e) => {
@@ -318,7 +331,13 @@
               // Also activate the correct category when scrolling
               const categoryName = getCategoryFromArticleId(id);
               if (categoryName) {
-                activateCategoryByName(categoryName);
+                // Use a non-scrolling version of activateCategoryByName to avoid re-triggering scroll
+                const category = Array.from(categories).find(c => 
+                  c.querySelector('span').textContent.toLowerCase() === categoryName
+                );
+                if (category) {
+                  switchCategory(category, null); // Activate category without re-triggering scroll
+                }
               }
             }
           }
@@ -331,6 +350,18 @@
       document.querySelectorAll('.mattie-blog-post').forEach(post => {
         observer.observe(post);
       });
+
+      // Initial activation of the first category and its first article if they exist
+      if (categories.length > 0) {
+        // Find the first article link and activate its category
+        const firstActiveArticleLink = categories[0].querySelector('.toc-articles a');
+        if (firstActiveArticleLink) {
+          navigateToArticle(firstActiveArticleLink);
+        } else {
+          // Fallback: just activate the first category if no articles are found
+          switchCategory(categories[0]);
+        }
+      }
     });
   </script>
 </body>

@@ -1,7 +1,6 @@
 :root {
   --primary-color: #2D2D2D;
   --secondary-color: #4A4A4A;
-  --accent-color: #2e6e4c;
   --background-color: #F5F5F5;
   --text-color: #333333;
   --spacing-unit: clamp(1rem, 2vw, 1.5rem);

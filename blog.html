@@ -12,20 +12,16 @@
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body class="blog-body">
-  <nav>
+  <nav class="navbar">
     <div class="nav-content">
       <a href="index.html" class="logo">MB</a>
+      <button class="mobile-menu-button" aria-label="Toggle menu">☰</button>
       <div class="nav-links">
         <a href="index.html">Home</a>
         <a href="blog.html" class="active">Learning Log</a>
         <a href="index.html#about">About</a>
         <a href="index.html#contact">Contact</a>
       </div>
-      <button class="mobile-menu-button" aria-label="Toggle menu">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
     </div>
   </nav>
 
@@ -203,13 +199,13 @@
       // Handle category switching
       const categories = document.querySelectorAll('.toc-category');
       const blogSections = document.querySelectorAll('.blog-category');
-      
+
       function switchCategory(category, onTransitionCompleteCallback = null) {
         // Remove active class from all categories in TOC
         categories.forEach(c => c.classList.remove('active'));
         // Add active class to clicked category
         category.classList.add('active');
-        
+
         // Hide all blog sections with fade out, then set display: none
         blogSections.forEach(section => {
           if (section.classList.contains('active')) {
@@ -224,7 +220,7 @@
             section.style.opacity = '0';
           }
         });
-        
+
         // Show the corresponding blog section with fade in
         const categoryName = category.querySelector('span').textContent.toLowerCase();
         const targetSection = document.querySelector(`.blog-${categoryName}`);
@@ -298,7 +294,7 @@
         }
       }
 
-      // Add event listeners for category clicks (already exists, but for clarity)
+      // Add event listeners for category clicks
       categories.forEach(category => {
         category.addEventListener('click', () => switchCategory(category));
         
@@ -331,12 +327,11 @@
               // Also activate the correct category when scrolling
               const categoryName = getCategoryFromArticleId(id);
               if (categoryName) {
-                // Use a non-scrolling version of activateCategoryByName to avoid re-triggering scroll
                 const category = Array.from(categories).find(c => 
                   c.querySelector('span').textContent.toLowerCase() === categoryName
                 );
                 if (category) {
-                  switchCategory(category, null); // Activate category without re-triggering scroll
+                  switchCategory(category, null); 
                 }
               }
             }
@@ -353,10 +348,10 @@
 
       // Initial activation of the first category and its first article if they exist
       if (categories.length > 0) {
-        // Find the first article link and activate its category
-        const firstActiveArticleLink = categories[0].querySelector('.toc-articles a');
-        if (firstActiveArticleLink) {
-          navigateToArticle(firstActiveArticleLink);
+        const firstArticleLink = categories[0].querySelector('.toc-articles a');
+        if (firstArticleLink) {
+          // Use navigateToArticle to ensure the category is active and then scrolls
+          navigateToArticle(firstArticleLink);
         } else {
           // Fallback: just activate the first category if no articles are found
           switchCategory(categories[0]);

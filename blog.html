@@ -26,29 +26,25 @@
   </nav>
 
   <div class="mattie-blog-container">
-    <!-- Sidebar Table of Contents with categories and dropdowns -->
     <aside class="toc-sidebar">
       <div class="toc-card">
         <h3>CONTENTS</h3>
         <ul class="toc-categories">
-          <!-- Adventures Category -->
-          <li class="toc-category" tabindex="0">
+          <li class="toc-category" tabindex="0" data-category="adventures">
             <span>Adventures</span>
             <ul class="toc-articles">
               <li><a href="#adventure1">Swimming</a></li>
               <li><a href="#adventure2">Climbing</a></li>
             </ul>
           </li>
-          <!-- Engineering Category -->
-          <li class="toc-category" tabindex="0">
+          <li class="toc-category" tabindex="0" data-category="engineering">
             <span>Engineering</span>
             <ul class="toc-articles">
               <li><a href="#engineering1">Robotics</a></li>
               <li><a href="#engineering2">Thermal Dynamics</a></li>
             </ul>
           </li>
-          <!-- Software Dev Category -->
-          <li class="toc-category" tabindex="0">
+          <li class="toc-category" tabindex="0" data-category="software">
             <span>Software Dev</span>
             <ul class="toc-articles">
               <li><a href="#software1">Portfolio Site</a></li>
@@ -59,11 +55,9 @@
       </div>
     </aside>
 
-    <!-- Main Content: Only show articles from the selected category -->
     <main class="mattie-blog-main">
       <!-- Adventures Articles (shown by default) -->
-      <section class="blog-category blog-adventures">
-        <!-- Example Article -->
+      <section class="blog-category blog-adventures active" data-category="adventures" style="display: block; opacity: 1;">
         <article id="adventure1" class="mattie-blog-post">
           <header class="mattie-blog-header">
             <h1 class="mattie-blog-title">Swimming</h1>
@@ -85,10 +79,9 @@
             <p>Exams over. I'm out in a lake somewhere, swimming across to explore islands.</p>
           </div>
         </article>
-        <!-- Add more Adventures articles here, following the same structure -->
       </section>
-      <!-- Engineering Articles -->
-      <section class="blog-category blog-engineering">
+
+      <section class="blog-category blog-engineering" data-category="engineering" style="display: none; opacity: 0;">
         <article id="engineering1" class="mattie-blog-post">
           <header class="mattie-blog-header">
             <h1 class="mattie-blog-title">Robotics</h1>
@@ -112,10 +105,9 @@
             </ul>
           </div>
         </article>
-        <!-- Add more Engineering articles here -->
       </section>
-      <!-- Software Dev Articles -->
-      <section class="blog-category blog-software">
+
+      <section class="blog-category blog-software" data-category="software" style="display: none; opacity: 0;">
         <article id="software1" class="mattie-blog-post">
           <header class="mattie-blog-header">
             <h1 class="mattie-blog-title">AI Didn't Make Me Productive — It Made Me Feel Behind</h1>
@@ -135,52 +127,31 @@
           </header>
           <div class="mattie-blog-post-content">
             <p><em>So I started with what I actually knew: HTML and CSS.</em></p>
-
             <p>Is it just me, or is AI sometimes... not that helpful?</p>
-
             <p>I've been working on a simple landing page to showcase my engineering portfolio — something clean, to help me get freelance clients for mechanical engineering projects. So naturally, I thought: <strong>why not use AI?</strong></p>
             <p>Everyone talks about how easy it is now. I keep seeing posts about 3-year-olds (okay, maybe not literally) launching entire businesses with tools like Lovable, Cursor, or ChatGPT. Just type a prompt, and boom — site shipped, product launched, SaaS money rolling in.</p>
             <p>I thought I could do the same.</p>
             <h2>When AI Feels Like a Shortcut You Can't Take</h2>
             <p>Lovable generated a working site in seconds — it was kind of magical.</p>
             <p>Until I opened the code.</p>
-
             <p>Suddenly I was looking at pages of TypeScript, Vite config files, API handlers, edge functions... and I realized I had no idea what any of it actually did. Trying to customize it was like trying to read a book in a language I didn't speak. Every time I changed one thing, something else broke.</p>
-
             <p>So I spent hours trying to <strong>understand</strong> what AI had made for me — instead of actually building something <em>I</em> understood.</p>
-
             <blockquote>AI wasn't helping. It was hiding the learning I needed to do.</blockquote>
-
             <h2>Back to Basics</h2>
-
             <p>So I gave up.</p>
-
             <p>Not on the site — but on the AI.</p>
-
             <p>I opened a blank <code>.html</code> file and <code>.css</code> file and started from scratch.</p>
-
             <p>No React. No frameworks. No backend. No AI.</p>
-
             <p>Just the stuff I actually knew. Headings. Buttons. Margins. Flexbox. I slowly built a static portfolio site by hand — understanding every single line of code along the way.</p>
-
             <p>And you know what?</p>
-
             <p>It wasn't impressive. It wasn't "AI startup founder in San Francisco" energy. But it was <strong>mine</strong>. And it worked.</p>
-
             <p>It wasn't fast, but it was real progress.</p>
-
             <h2>Learning ≠ Speed</h2>
-
             <p>The irony?</p>
-
             <p>Everyone says AI is a productivity tool. But for me, it became a distraction — because I was trying to speed through skills I hadn't built yet.</p>
-
             <blockquote>There's nothing wrong with using AI. But if you don't understand the foundations — if you're still learning how websites work — it won't feel like a shortcut. It'll feel like a wall.</blockquote>
-
             <p><strong>Sometimes, the slow path <em>is</em> the shortcut.</strong></p>
-
             <h2>What I Learned</h2>
-
             <ul>
               <li>If you're new, AI can't replace actual understanding.</li>
               <li>If you're stuck, stripping everything back helps.</li>
@@ -189,116 +160,99 @@
             </ul>
           </div>
         </article>
-        <!-- Add more Software Dev articles here -->
       </section>
     </main>
   </div>
 
+  <!-- existing script remains unchanged -->
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      // Handle category switching
       const categories = document.querySelectorAll('.toc-category');
       const blogSections = document.querySelectorAll('.blog-category');
-
-      function switchCategory(category, onTransitionCompleteCallback = null) {
-        // Remove active class from all categories in TOC
+      const articleLinks = document.querySelectorAll('.toc-articles a');
+  
+      function switchCategory(categoryElement, callback = null) {
         categories.forEach(c => c.classList.remove('active'));
-        // Add active class to clicked category
-        category.classList.add('active');
-
-        // Hide all blog sections with fade out, then set display: none
+        categoryElement.classList.add('active');
+  
         blogSections.forEach(section => {
           if (section.classList.contains('active')) {
             section.style.opacity = '0';
             section.addEventListener('transitionend', function handler() {
               section.style.display = 'none';
+              section.classList.remove('active');
               section.removeEventListener('transitionend', handler);
-            }, {once: true});
+            }, { once: true });
           } else {
-            // If not active, ensure it's hidden instantly without transition
             section.style.display = 'none';
             section.style.opacity = '0';
+            section.classList.remove('active');
           }
         });
-
-        // Show the corresponding blog section with fade in
-        const categoryName = category.querySelector('span').textContent.toLowerCase();
-        const targetSection = document.querySelector(`.blog-${categoryName}`);
+  
+        const categoryName = categoryElement.dataset.category;
+        const targetSection = document.querySelector(`.blog-category[data-category="${categoryName}"]`);
         if (targetSection) {
-          targetSection.style.display = 'block'; // Set display: block first
-          // Force reflow to ensure display: block is applied before opacity transition
-          void targetSection.offsetWidth; 
+          targetSection.style.display = 'block';
+          void targetSection.offsetWidth;
           targetSection.style.opacity = '1';
-
-          if (onTransitionCompleteCallback) {
+          targetSection.classList.add('active');
+  
+          if (callback) {
             targetSection.addEventListener('transitionend', function handler() {
-              onTransitionCompleteCallback();
+              callback();
               targetSection.removeEventListener('transitionend', handler);
-            }, {once: true});
+            }, { once: true });
           }
         }
       }
-
-      // Function to get category from article ID
+  
       function getCategoryFromArticleId(articleId) {
         if (articleId.startsWith('adventure')) return 'adventures';
         if (articleId.startsWith('engineering')) return 'engineering';
         if (articleId.startsWith('software')) return 'software';
         return null;
       }
-
-      // Function to activate category by name
+  
       function activateCategoryByName(categoryName, callback = null) {
         const category = Array.from(categories).find(c => 
-          c.querySelector('span').textContent.toLowerCase() === categoryName
+          c.dataset.category === categoryName
         );
         if (category) {
           switchCategory(category, callback);
         }
       }
-
-      // Handle article navigation
-      const articleLinks = document.querySelectorAll('.toc-articles a');
-      
+  
       function navigateToArticle(link) {
-        // Remove active class from all links
         articleLinks.forEach(l => l.classList.remove('active'));
-        // Add active class to clicked link
         link.classList.add('active');
-        
-        // Get the article ID and determine its category
+  
         const targetId = link.getAttribute('href').substring(1);
         const categoryName = getCategoryFromArticleId(targetId);
-        
-        // Scroll to the article with smooth behavior
+  
         const scrollIntoView = () => {
           const targetArticle = document.getElementById(targetId);
           if (targetArticle) {
             const headerOffset = 100;
             const elementPosition = targetArticle.getBoundingClientRect().top;
             const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
+  
             window.scrollTo({
               top: offsetPosition,
               behavior: 'smooth'
             });
           }
         };
-
-        // Activate the correct category section and then scroll
+  
         if (categoryName) {
           activateCategoryByName(categoryName, scrollIntoView);
         } else {
-          // If category name is null (shouldn't happen with current setup), just scroll
           scrollIntoView();
         }
       }
-
-      // Add event listeners for category clicks
+  
       categories.forEach(category => {
         category.addEventListener('click', () => switchCategory(category));
-        
-        // Add keyboard navigation
         category.addEventListener('keydown', (e) => {
           if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault();
@@ -306,15 +260,15 @@
           }
         });
       });
-
+  
       articleLinks.forEach(link => {
         link.addEventListener('click', (e) => {
           e.preventDefault();
           navigateToArticle(link);
         });
       });
-
-      // Add intersection observer for article visibility
+  
+      // REMOVE this observer's switchCategory call to avoid conflict
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
@@ -323,41 +277,26 @@
             if (link) {
               articleLinks.forEach(l => l.classList.remove('active'));
               link.classList.add('active');
-              
-              // Also activate the correct category when scrolling
-              const categoryName = getCategoryFromArticleId(id);
-              if (categoryName) {
-                const category = Array.from(categories).find(c => 
-                  c.querySelector('span').textContent.toLowerCase() === categoryName
-                );
-                if (category) {
-                  switchCategory(category, null); 
-                }
-              }
             }
           }
         });
       }, {
         rootMargin: '-20% 0px -80% 0px'
       });
-
-      // Observe all articles
+  
       document.querySelectorAll('.mattie-blog-post').forEach(post => {
         observer.observe(post);
       });
-
-      // Initial activation of the first category and its first article if they exist
-      if (categories.length > 0) {
-        const firstArticleLink = categories[0].querySelector('.toc-articles a');
-        if (firstArticleLink) {
-          // Use navigateToArticle to ensure the category is active and then scrolls
-          navigateToArticle(firstArticleLink);
-        } else {
-          // Fallback: just activate the first category if no articles are found
-          switchCategory(categories[0]);
-        }
+  
+      // Initial load
+      const firstArticleLink = articleLinks[0];
+      if (firstArticleLink) {
+        navigateToArticle(firstArticleLink);
+      } else if (categories.length > 0) {
+        switchCategory(categories[0]);
       }
     });
   </script>
+  
 </body>
-</html> 
+</html>

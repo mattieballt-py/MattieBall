@@ -20,7 +20,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const { data, error } = await supabase
       .from('ContactMessages')
-      .insert([{ name, email, message }]);
+      .insert([
+        {
+          name,
+          email,
+          message,
+        }
+      ])
+      .select();
 
     if (error) {
       console.error('Insert error:', error);

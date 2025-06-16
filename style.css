@@ -139,7 +139,7 @@
   
   h2 {
     font-size: clamp(2rem, 3vw, 2.5rem);
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
     position: relative;
     display: inline-block;
   }
@@ -223,7 +223,12 @@
   .contact {
     max-width: min(600px, 90%);
     margin: 6rem auto;
+    margin-bottom: 0;
     padding-top: 5rem;
+  }
+  
+  .contact p {
+    margin-bottom: 1rem;
   }
   
   .form-group {

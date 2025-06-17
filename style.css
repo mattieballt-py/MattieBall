@@ -465,8 +465,10 @@
   }
   
   .award-image {
-    max-width: 120px; /* Adjusted to be smaller */
+    max-width: 120px;
+    width: 100%;
     height: auto;
+    display: block;
     margin-bottom: 1rem;
   }
   
@@ -484,4 +486,12 @@
       gap: 1.5rem;
     }
   }
-  
+
+
+  .award-item {
+  max-width: 120px;
+  flex-shrink: 0;
+  text-align: center;
+}
+
+

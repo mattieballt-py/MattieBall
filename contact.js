@@ -31,11 +31,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (error) {
       console.error('Insert error:', error);
-      status.textContent = '❌ Failed to send message';
+      status.textContent = 'Failed to send message';
       status.style.color = 'red';
     } else {
       console.log('Message sent:', data);
-      status.textContent = '✅ Message sent successfully!';
+      status.textContent = 'Message sent!';
       status.style.color = 'green';
       form.reset();
     }

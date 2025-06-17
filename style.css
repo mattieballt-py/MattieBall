@@ -465,18 +465,13 @@
   }
   
   .award-image {
-    max-width: 120px;
-    width: 100%;
-    height: auto;
+    width: 120px !important;
+    height: auto !important;
+    max-width: 100% !important;
     display: block;
     margin-bottom: 1rem;
   }
   
-  .award-caption {
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: var(--primary-color);
-  }
   
   /* Responsive adjustments for smaller screens (if needed) */
   @media (max-width: 768px) {

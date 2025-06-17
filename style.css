@@ -465,7 +465,7 @@
   }
   
   .award-image {
-    max-width: 200px; /* Made smaller */
+    max-width: 120px; /* Adjusted to be smaller */
     height: auto;
     margin-bottom: 1rem;
   }

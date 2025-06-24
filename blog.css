@@ -470,3 +470,9 @@ body {
     height: 180px;
   }
 }
+
+.blog-article img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}

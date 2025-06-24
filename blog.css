@@ -417,6 +417,35 @@ body {
 .swimming-image-row img:hover {
   transform: scale(1.03);
 }
+
+/* --- New: Subscribe + Images Row Layout --- */
+@media (min-width: 1000px) {
+  .subscribe-images-row {
+    display: flex;
+    flex-direction: row;
+    gap: 3rem;
+    align-items: flex-start;
+    justify-content: center;
+    margin: 3rem 0;
+  }
+  .subscribe-images-row .swimming-image-row {
+    flex-direction: row;
+    gap: 1.5rem;
+    flex: 1 1 0;
+    justify-content: flex-end;
+    margin: 0;
+  }
+  .subscribe-images-row .subscribe-form-container {
+    flex: 0 0 340px;
+    max-width: 340px;
+    margin: 0;
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+}
+
 @media (max-width: 900px) {
   .swimming-image-row {
     gap: 1rem;
@@ -424,6 +453,17 @@ body {
   .swimming-image-row img {
     max-width: 220px;
     height: 140px;
+  }
+}
+@media (max-width: 1000px) {
+  .subscribe-images-row {
+    flex-direction: column;
+    gap: 2rem;
+  }
+  .subscribe-images-row .swimming-image-row,
+  .subscribe-images-row .subscribe-form-container {
+    max-width: 100%;
+    width: 100%;
   }
 }
 @media (max-width: 600px) {

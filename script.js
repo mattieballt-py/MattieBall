@@ -25,3 +25,29 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 }); 
+document.addEventListener('DOMContentLoaded', () => {
+  const subscribeForm = document.getElementById('subscribe-form');
+
+  if (subscribeForm) {
+    subscribeForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const emailInput = document.getElementById('email-input');
+      const message = document.getElementById('subscribe-message');
+      const email = emailInput.value;
+
+      const { data, error } = await supabase
+        .from('blog_subscribers')
+        .insert([{ email }]);
+
+      if (error) {
+        message.textContent = 'Oops! Something went wrong.';
+        message.style.color = 'red';
+        console.error(error);
+      } else {
+        message.textContent = 'Thanks for subscribing!';
+        message.style.color = 'green';
+        emailInput.value = '';
+      }
+    });
+  }
+});

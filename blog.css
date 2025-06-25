@@ -398,24 +398,34 @@ body {
 /* Responsive three-image row for blog post */
 .swimming-image-row {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
-  gap: clamp(1.5rem, 3vw, 2rem);
-  justify-content: center;
-  align-items: flex-start;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
   margin: 2rem 0;
 }
+
 .swimming-image-row img {
   width: 100%;
-  height: 180px;
+  height: 200px;
   object-fit: cover;
-  border-radius: var(--border-radius);
-  margin: 0.5rem 0 1rem;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
-  transition: transform 0.2s;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease-in-out;
 }
 
-.swimming-image-row img:hover {
-  transform: scale(1.03);
+@media (max-width: 900px) {
+  .swimming-image-row {
+    grid-template-columns: 1fr;
+  }
+  
+  .swimming-image-row img {
+    height: 250px;
+  }
+}
+
+@media (max-width: 600px) {
+  .swimming-image-row img {
+    height: 200px;
+  }
 }
 
 /* --- New: Subscribe + Images Row Layout --- */
@@ -446,14 +456,6 @@ body {
   }
 }
 
-@media (max-width: 900px) {
-  .swimming-image-row {
-    gap: 1rem;
-  }
-  .swimming-image-row img {
-    height: 140px;
-  }
-}
 @media (max-width: 1000px) {
   .subscribe-images-row {
     flex-direction: column;
@@ -463,15 +465,6 @@ body {
   .subscribe-images-row .subscribe-form-container {
     max-width: 100%;
     width: 100%;
-  }
-}
-@media (max-width: 600px) {
-  .swimming-image-row {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-  }
-  .swimming-image-row img {
-    height: 180px;
   }
 }
 

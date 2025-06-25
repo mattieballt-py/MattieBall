@@ -319,89 +319,102 @@
       const articleLinks = document.querySelectorAll('.toc-articles a');
       const blogCategories = document.querySelectorAll('.blog-category');
 
-      // Function to show a category's articles
-      function showCategory(categoryId, andScrollToArticleId = null) {
-        // Hide all blog categories first
+      function displayContentForCategory(categoryId) {
         blogCategories.forEach(cat => {
-          cat.style.display = 'none';
-          cat.classList.remove('active');
-        });
-
-        // Show the target category
-        const targetCategory = document.querySelector(`.blog-category[data-category="${categoryId}"]`);
-        if (targetCategory) {
-          targetCategory.style.display = 'block';
-          setTimeout(() => targetCategory.classList.add('active'), 10);
-        }
-
-        // Deactivate all categories in TOC
-        categories.forEach(cat => cat.classList.remove('active'));
-
-        // Activate the selected one
-        const activeCategory = document.querySelector(`.toc-category[data-category="${categoryId}"]`);
-        if (activeCategory) {
-          activeCategory.classList.add('active');
-        }
-        
-        // Scroll to article if specified
-        if (andScrollToArticleId) {
-          const articleElement = document.getElementById(andScrollToArticleId);
-          if (articleElement) {
-            articleElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          if (cat.dataset.category === categoryId) {
+            cat.style.display = 'block';
+            setTimeout(() => cat.classList.add('active'), 10);
+          } else {
+            cat.style.display = 'none';
+            cat.classList.remove('active');
           }
+        });
+      }
+
+      function setActiveArticleLink(activeLink) {
+        articleLinks.forEach(link => link.classList.remove('active'));
+        if (activeLink) {
+          activeLink.classList.add('active');
         }
       }
 
-      // 1. Handle clicks on categories
+      function expandCategory(categoryElement) {
+        if (categoryElement) {
+          // Close other categories to keep the TOC clean
+          categories.forEach(c => {
+            if (c !== categoryElement) {
+              c.classList.remove('active');
+            }
+          });
+          categoryElement.classList.add('active');
+        }
+      }
+
+      // 1. Handle clicks on category SPANs (for toggling)
       categories.forEach(category => {
-        category.addEventListener('click', (e) => {
-          // Avoid link navigation from interfering
-          if (e.target.tagName === 'SPAN') {
-             const categoryId = category.dataset.category;
-            showCategory(categoryId);
-            // Toggle active class for dropdown
-            category.classList.toggle('active');
-          }
-        });
+        const span = category.querySelector('span');
+        if (span) {
+          span.addEventListener('click', () => {
+            const wasActive = category.classList.contains('active');
+            // Allow only one category to be open at a time
+            categories.forEach(c => c.classList.remove('active'));
+            if (!wasActive) {
+                category.classList.add('active');
+            }
+            displayContentForCategory(category.dataset.category);
+          });
+        }
       });
 
       // 2. Handle clicks on article links
       articleLinks.forEach(link => {
         link.addEventListener('click', (e) => {
           e.preventDefault();
+          
           const articleId = link.getAttribute('href').substring(1);
+          const articleElement = document.getElementById(articleId);
           const parentCategory = link.closest('.toc-category');
-          if (parentCategory) {
-            const categoryId = parentCategory.dataset.category;
-            showCategory(categoryId, articleId);
 
-            // Update active link style
-            articleLinks.forEach(a => a.classList.remove('active'));
-            link.classList.add('active');
+          if (articleElement && parentCategory) {
+            const categoryId = parentCategory.dataset.category;
+            
+            displayContentForCategory(categoryId);
+            expandCategory(parentCategory);
+            setActiveArticleLink(link);
+            
+            articleElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
           }
         });
       });
-      
+
       // 3. Handle hash on page load
-      const currentHash = window.location.hash;
-      if (currentHash) {
-        const targetLink = document.querySelector(`.toc-articles a[href="${currentHash}"]`);
-        if (targetLink) {
-          const articleId = currentHash.substring(1);
-          const parentCategory = targetLink.closest('.toc-category');
-          if (parentCategory) {
-            const categoryId = parentCategory.dataset.category;
-            showCategory(categoryId, articleId);
-            targetLink.classList.add('active');
+      function showArticleFromHash() {
+        const currentHash = window.location.hash;
+        if (currentHash) {
+          const targetLink = document.querySelector(`.toc-articles a[href="${currentHash}"]`);
+          if (targetLink) {
+            const articleId = currentHash.substring(1);
+            const articleElement = document.getElementById(articleId);
+            const parentCategory = targetLink.closest('.toc-category');
+            
+            if (articleElement && parentCategory) {
+              const categoryId = parentCategory.dataset.category;
+              displayContentForCategory(categoryId);
+              expandCategory(parentCategory);
+              setActiveArticleLink(targetLink);
+              articleElement.scrollIntoView({ block: 'start' });
+            }
+          }
+        } else {
+          // Default: show first category's content, keep TOC collapsed.
+          const firstCategory = document.querySelector('.toc-category');
+          if (firstCategory) {
+            displayContentForCategory(firstCategory.dataset.category);
           }
         }
-      } else {
-        // Show default category if no hash
-        const defaultCategory = document.querySelector('.toc-category');
-        if(defaultCategory) {
-            showCategory(defaultCategory.dataset.category);
-        }
       }
+      
+      showArticleFromHash();
     });
   </script>
   <footer class="footer">

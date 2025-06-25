@@ -310,104 +310,100 @@
   </div>
 
   <!-- existing script remains unchanged -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script type="module" src="contact.js"></script>
+  <script src="script.js"></script>
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', () => {
       const categories = document.querySelectorAll('.toc-category');
-      const blogSections = document.querySelectorAll('.blog-category');
       const articleLinks = document.querySelectorAll('.toc-articles a');
-      const blogArticles = document.querySelectorAll('.blog-article');
-  
-      function getCategoryFromArticleId(articleId) {
-        if (articleId.startsWith('adventure')) return 'adventures';
-        if (articleId.startsWith('engineering')) return 'engineering';
-        if (articleId.startsWith('software')) return 'software';
-        return null;
-      }
+      const blogCategories = document.querySelectorAll('.blog-category');
 
-      function showArticle(articleId, shouldScroll = true) {
-        const targetArticle = document.getElementById(articleId);
-        if (!targetArticle) return;
+      // Function to show a category's articles
+      function showCategory(categoryId, andScrollToArticleId = null) {
+        // Hide all blog categories first
+        blogCategories.forEach(cat => {
+          cat.style.display = 'none';
+          cat.classList.remove('active');
+        });
 
-        const categoryName = getCategoryFromArticleId(articleId);
+        // Show the target category
+        const targetCategory = document.querySelector(`.blog-category[data-category="${categoryId}"]`);
+        if (targetCategory) {
+          targetCategory.style.display = 'block';
+          setTimeout(() => targetCategory.classList.add('active'), 10);
+        }
 
-        // Activate correct category and section
-        blogSections.forEach(s => s.classList.remove('active'));
-        const targetSection = document.querySelector(`.blog-category[data-category="${categoryName}"]`);
-        if (targetSection) targetSection.classList.add('active');
+        // Deactivate all categories in TOC
+        categories.forEach(cat => cat.classList.remove('active'));
 
-        // Hide all articles, then show the target one
-        blogArticles.forEach(a => a.style.display = 'none');
-        targetArticle.style.display = 'block';
-
-        // Update active states in Table of Contents
-        articleLinks.forEach(l => l.classList.remove('active'));
-        categories.forEach(c => c.classList.remove('active'));
+        // Activate the selected one
+        const activeCategory = document.querySelector(`.toc-category[data-category="${categoryId}"]`);
+        if (activeCategory) {
+          activeCategory.classList.add('active');
+        }
         
-        const activeLink = document.querySelector(`.toc-articles a[href="#${articleId}"]`);
-        if (activeLink) {
-          activeLink.classList.add('active');
-          const parentCategory = activeLink.closest('.toc-category');
-          if (parentCategory) parentCategory.classList.add('active');
-        }
-
-        if (shouldScroll) {
-            const headerOffset = 100;
-            const elementPosition = targetArticle.getBoundingClientRect().top;
-            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-    
-            window.scrollTo({
-              top: offsetPosition,
-              behavior: 'smooth'
-            });
+        // Scroll to article if specified
+        if (andScrollToArticleId) {
+          const articleElement = document.getElementById(andScrollToArticleId);
+          if (articleElement) {
+            articleElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
         }
       }
-  
-      // Handle category clicks to show the first article of the category
+
+      // 1. Handle clicks on categories
       categories.forEach(category => {
         category.addEventListener('click', (e) => {
-            // Avoid triggering for clicks on links inside
-            if (e.target.closest('a')) return;
-            const firstArticleLink = category.querySelector('.toc-articles a');
-            if(firstArticleLink) {
-                const articleId = firstArticleLink.getAttribute('href').substring(1);
-                showArticle(articleId);
-            }
+          // Avoid link navigation from interfering
+          if (e.target.tagName === 'SPAN') {
+             const categoryId = category.dataset.category;
+            showCategory(categoryId);
+            // Toggle active class for dropdown
+            category.classList.toggle('active');
+          }
         });
       });
 
-      // Handle direct article link clicks
+      // 2. Handle clicks on article links
       articleLinks.forEach(link => {
         link.addEventListener('click', (e) => {
           e.preventDefault();
-          const targetId = link.getAttribute('href').substring(1);
-          history.pushState(null, '', `#${targetId}`); // Update URL hash
-          showArticle(targetId);
+          const articleId = link.getAttribute('href').substring(1);
+          const parentCategory = link.closest('.toc-category');
+          if (parentCategory) {
+            const categoryId = parentCategory.dataset.category;
+            showCategory(categoryId, articleId);
+
+            // Update active link style
+            articleLinks.forEach(a => a.classList.remove('active'));
+            link.classList.add('active');
+          }
         });
       });
-  
-      // Handle browser back/forward navigation
-      window.addEventListener('popstate', () => {
-        const hash = window.location.hash.substring(1);
-        if (hash) {
-          showArticle(hash, false);
+      
+      // 3. Handle hash on page load
+      const currentHash = window.location.hash;
+      if (currentHash) {
+        const targetLink = document.querySelector(`.toc-articles a[href="${currentHash}"]`);
+        if (targetLink) {
+          const articleId = currentHash.substring(1);
+          const parentCategory = targetLink.closest('.toc-category');
+          if (parentCategory) {
+            const categoryId = parentCategory.dataset.category;
+            showCategory(categoryId, articleId);
+            targetLink.classList.add('active');
+          }
         }
-      });
-  
-      // Initial load
-      const initialHash = window.location.hash.substring(1);
-      if (initialHash && document.getElementById(initialHash)) {
-        showArticle(initialHash, false);
       } else {
-        // Show first article of first category by default
-        const firstArticleLink = document.querySelector('.toc-articles a');
-        if (firstArticleLink) {
-            const articleId = firstArticleLink.getAttribute('href').substring(1);
-            showArticle(articleId, false);
+        // Show default category if no hash
+        const defaultCategory = document.querySelector('.toc-category');
+        if(defaultCategory) {
+            showCategory(defaultCategory.dataset.category);
         }
       }
     });
   </script>
-  <script type="module" src="contact.js"></script>
   <footer class="footer">
     <div class="footer-content">
       <div class="social-icons">

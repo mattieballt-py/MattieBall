@@ -413,6 +413,7 @@ body {
   box-shadow: 0 4px 16px rgba(0,0,0,0.08);
   transition: transform 0.2s;
 }
+
 .swimming-image-row img:hover {
   transform: scale(1.03);
 }
@@ -421,7 +422,7 @@ body {
 @media (min-width: 1000px) {
   .subscribe-images-row {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     gap: 3rem;
     align-items: flex-start;
     justify-content: center;
@@ -446,6 +447,9 @@ body {
 }
 
 @media (max-width: 900px) {
+  .swimming-image-row {
+    gap: 1rem;
+  }
   .swimming-image-row img {
     height: 140px;
   }

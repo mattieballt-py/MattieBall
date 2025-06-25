@@ -79,20 +79,10 @@
           </header>
           <div class="mattie-blog-post-content">
             <p>Exams over. I'm out in a lake somewhere, swimming across to explore islands.</p>
-            <div class="subscribe-images-row">
-              <div class="swimming-image-row">
-                <img src="Assets/IMG_8809.PNG" alt="Swimming in the lake" loading="lazy" />
-                <img src="Assets/swimming_lake.png" alt="Swimming view of lake" loading="lazy" />
-                <img src="Assets/swimming_island.png" alt="Swimming to the island" loading="lazy" />
-              </div>
-              <div class="subscribe-form-container">
-                <h3>Stay Updated</h3>
-                <form id="subscribe-form">
-                  <input type="email" id="email-input" placeholder="Emailed Next Blog" required />
-                  <button type="submit">Notify Me</button>
-                  <p id="subscribe-message"></p>
-                </form>
-              </div>
+            <div class="swimming-image-row">
+              <img src="Assets/IMG_8809.PNG" alt="Swimming in the lake" loading="lazy" />
+              <img src="Assets/swimming_lake.png" alt="Swimming view of lake" loading="lazy" />
+              <img src="Assets/swimming_island.png" alt="Swimming to the island" loading="lazy" />
             </div>
           </div>
         </article>
@@ -309,6 +299,14 @@
         
       </section>
     </main>
+    <div class="subscribe-form-container">
+      <h3>Stay Updated</h3>
+      <form id="subscribe-form">
+        <input type="email" id="email-input" placeholder="Emailed Next Blog" required />
+        <button type="submit">Notify Me</button>
+        <p id="subscribe-message"></p>
+      </form>
+    </div>
   </div>
 
   <!-- existing script remains unchanged -->
@@ -319,125 +317,92 @@
       const articleLinks = document.querySelectorAll('.toc-articles a');
       const blogArticles = document.querySelectorAll('.blog-article');
   
-      // Function to handle hash changes
-      function handleHashChange() {
-        const hash = window.location.hash.substring(1);
-        if (hash) {
-          showArticle(hash);
-        }
-      }
-  
-      // Function to show a specific article
-      function showArticle(articleId) {
-        // Hide all articles
-        blogArticles.forEach(article => {
-          article.style.display = 'none';
-        });
-  
-        // Show the target article
-        const targetArticle = document.getElementById(articleId);
-        if (targetArticle) {
-          targetArticle.style.display = 'block';
-          
-          // Get the category of the article
-          const categoryName = getCategoryFromArticleId(articleId);
-          if (categoryName) {
-            activateCategoryByName(categoryName);
-          }
-  
-          // Scroll to the article
-          const headerOffset = 100;
-          const elementPosition = targetArticle.getBoundingClientRect().top;
-          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-  
-          window.scrollTo({
-            top: offsetPosition,
-            behavior: 'smooth'
-          });
-        }
-      }
-  
       function getCategoryFromArticleId(articleId) {
         if (articleId.startsWith('adventure')) return 'adventures';
         if (articleId.startsWith('engineering')) return 'engineering';
         if (articleId.startsWith('software')) return 'software';
         return null;
       }
-  
-      function activateCategoryByName(categoryName) {
-        const category = Array.from(categories).find(c => 
-          c.dataset.category === categoryName
-        );
-        if (category) {
-          switchCategory(category);
-        }
-      }
-  
-      function switchCategory(categoryElement) {
-        categories.forEach(c => c.classList.remove('active'));
-        categoryElement.classList.add('active');
-  
-        blogSections.forEach(section => {
-          if (section.classList.contains('active')) {
-            section.style.opacity = '0';
-            section.addEventListener('transitionend', function handler() {
-              section.style.display = 'none';
-              section.classList.remove('active');
-              section.removeEventListener('transitionend', handler);
-            }, { once: true });
-          } else {
-            section.style.display = 'none';
-            section.style.opacity = '0';
-            section.classList.remove('active');
-          }
-        });
-  
-        const categoryName = categoryElement.dataset.category;
+
+      function showArticle(articleId, shouldScroll = true) {
+        const targetArticle = document.getElementById(articleId);
+        if (!targetArticle) return;
+
+        const categoryName = getCategoryFromArticleId(articleId);
+
+        // Activate correct category and section
+        blogSections.forEach(s => s.classList.remove('active'));
         const targetSection = document.querySelector(`.blog-category[data-category="${categoryName}"]`);
-        if (targetSection) {
-          targetSection.style.display = 'block';
-          void targetSection.offsetWidth;
-          targetSection.style.opacity = '1';
-          targetSection.classList.add('active');
+        if (targetSection) targetSection.classList.add('active');
+
+        // Hide all articles, then show the target one
+        blogArticles.forEach(a => a.style.display = 'none');
+        targetArticle.style.display = 'block';
+
+        // Update active states in Table of Contents
+        articleLinks.forEach(l => l.classList.remove('active'));
+        categories.forEach(c => c.classList.remove('active'));
+        
+        const activeLink = document.querySelector(`.toc-articles a[href="#${articleId}"]`);
+        if (activeLink) {
+          activeLink.classList.add('active');
+          const parentCategory = activeLink.closest('.toc-category');
+          if (parentCategory) parentCategory.classList.add('active');
+        }
+
+        if (shouldScroll) {
+            const headerOffset = 100;
+            const elementPosition = targetArticle.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+    
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: 'smooth'
+            });
         }
       }
   
-      // Handle link clicks
+      // Handle category clicks to show the first article of the category
+      categories.forEach(category => {
+        category.addEventListener('click', (e) => {
+            // Avoid triggering for clicks on links inside
+            if (e.target.closest('a')) return;
+            const firstArticleLink = category.querySelector('.toc-articles a');
+            if(firstArticleLink) {
+                const articleId = firstArticleLink.getAttribute('href').substring(1);
+                showArticle(articleId);
+            }
+        });
+      });
+
+      // Handle direct article link clicks
       articleLinks.forEach(link => {
         link.addEventListener('click', (e) => {
           e.preventDefault();
           const targetId = link.getAttribute('href').substring(1);
+          history.pushState(null, '', `#${targetId}`); // Update URL hash
           showArticle(targetId);
-          
-          // Update active state of links
-          articleLinks.forEach(l => l.classList.remove('active'));
-          link.classList.add('active');
         });
       });
   
-      // Handle category clicks
-      categories.forEach(category => {
-        category.addEventListener('click', () => switchCategory(category));
-        category.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            switchCategory(category);
-          }
-        });
+      // Handle browser back/forward navigation
+      window.addEventListener('popstate', () => {
+        const hash = window.location.hash.substring(1);
+        if (hash) {
+          showArticle(hash, false);
+        }
       });
   
-      // Handle initial load and hash changes
-      window.addEventListener('hashchange', handleHashChange);
-      handleHashChange();
-  
-      // Initial load if no hash
-      if (!window.location.hash) {
-        const firstArticleLink = articleLinks[0];
+      // Initial load
+      const initialHash = window.location.hash.substring(1);
+      if (initialHash && document.getElementById(initialHash)) {
+        showArticle(initialHash, false);
+      } else {
+        // Show first article of first category by default
+        const firstArticleLink = document.querySelector('.toc-articles a');
         if (firstArticleLink) {
-          const targetId = firstArticleLink.getAttribute('href').substring(1);
-          showArticle(targetId);
-        } else if (categories.length > 0) {
-          switchCategory(categories[0]);
+            const articleId = firstArticleLink.getAttribute('href').substring(1);
+            showArticle(articleId, false);
         }
       }
     });

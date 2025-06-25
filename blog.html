@@ -319,11 +319,31 @@
       const articleLinks = document.querySelectorAll('.toc-articles a');
       const blogCategories = document.querySelectorAll('.blog-category');
 
-      function displayContentForCategory(categoryId) {
+      function displayContentForCategory(categoryId, showArticleId = null) {
         blogCategories.forEach(cat => {
           if (cat.dataset.category === categoryId) {
             cat.style.display = 'block';
             setTimeout(() => cat.classList.add('active'), 10);
+            // Hide all articles in this category except the one to show
+            const articles = cat.querySelectorAll('.blog-article');
+            let shown = false;
+            articles.forEach((article, idx) => {
+              if (showArticleId) {
+                if (article.id === showArticleId) {
+                  article.style.display = 'block';
+                  shown = true;
+                } else {
+                  article.style.display = 'none';
+                }
+              } else {
+                // If no article specified, show only the first
+                if (idx === 0) {
+                  article.style.display = 'block';
+                } else {
+                  article.style.display = 'none';
+                }
+              }
+            });
           } else {
             cat.style.display = 'none';
             cat.classList.remove('active');
@@ -340,7 +360,6 @@
 
       function expandCategory(categoryElement) {
         if (categoryElement) {
-          // Close other categories to keep the TOC clean
           categories.forEach(c => {
             if (c !== categoryElement) {
               c.classList.remove('active');
@@ -356,7 +375,6 @@
         if (span) {
           span.addEventListener('click', () => {
             const wasActive = category.classList.contains('active');
-            // Allow only one category to be open at a time
             categories.forEach(c => c.classList.remove('active'));
             if (!wasActive) {
                 category.classList.add('active');
@@ -370,18 +388,15 @@
       articleLinks.forEach(link => {
         link.addEventListener('click', (e) => {
           e.preventDefault();
-          
           const articleId = link.getAttribute('href').substring(1);
           const articleElement = document.getElementById(articleId);
           const parentCategory = link.closest('.toc-category');
 
           if (articleElement && parentCategory) {
             const categoryId = parentCategory.dataset.category;
-            
-            displayContentForCategory(categoryId);
+            displayContentForCategory(categoryId, articleId);
             expandCategory(parentCategory);
             setActiveArticleLink(link);
-            
             articleElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
           }
         });
@@ -396,24 +411,21 @@
             const articleId = currentHash.substring(1);
             const articleElement = document.getElementById(articleId);
             const parentCategory = targetLink.closest('.toc-category');
-            
             if (articleElement && parentCategory) {
               const categoryId = parentCategory.dataset.category;
-              displayContentForCategory(categoryId);
+              displayContentForCategory(categoryId, articleId);
               expandCategory(parentCategory);
               setActiveArticleLink(targetLink);
               articleElement.scrollIntoView({ block: 'start' });
             }
           }
         } else {
-          // Default: show first category's content, keep TOC collapsed.
           const firstCategory = document.querySelector('.toc-category');
           if (firstCategory) {
             displayContentForCategory(firstCategory.dataset.category);
           }
         }
       }
-      
       showArticleFromHash();
     });
   </script>

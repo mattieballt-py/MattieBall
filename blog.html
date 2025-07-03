@@ -60,7 +60,7 @@
 
     <main class="mattie-blog-main">
       <!-- Adventures Articles (shown by default) -->
-      <section class="blog-category blog-adventures active" data-category="adventures" style="display: block; opacity: 1;">
+      <section class="blog-category blog-adventures active" data-category="adventures" >
         <article id="adventure1" class="mattie-blog-post blog-article">
           <header class="mattie-blog-header">
             <h1 class="mattie-blog-title">Swimming</h1>
@@ -89,7 +89,7 @@
         </article>
       </section>
           <!-- Engineering Articles -->     
-      <section class="blog-category blog-engineering" data-category="engineering" style="display: none; opacity: 0;">
+      <section class="blog-category blog-engineering" data-category="engineering" >
         <article id="engineering1" class="mattie-blog-post blog-article">
           <header class="mattie-blog-header">
             <h1 class="mattie-blog-title">Robotics</h1>
@@ -211,7 +211,7 @@
         </article>
       </section>
 
-      <section class="blog-category blog-software" data-category="software" style="display: none; opacity: 0;">
+      <section class="blog-category blog-software" data-category="software" >
         <article id="software1" class="mattie-blog-post blog-article">
           <header class="mattie-blog-header">
             <h1 class="mattie-blog-title">AI Didn't Make Me Productive. It Made Me Feel Behind</h1>
@@ -374,6 +374,7 @@
                 // If no article specified, show only the first
                 if (idx === 0) {
                   article.style.display = 'block';
+                  article.style.opacity = "1";
                 } else {
                   article.style.display = 'none';
                 }
